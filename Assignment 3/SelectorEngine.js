@@ -5,10 +5,9 @@
  */
 function SelectorEngine(){
     GameEngine.call(this);
-    this.x = 50; //this is initial x
-    this.y = 20; //this is initial y
+    
     this.options = [];
-    this.isExpanded = false;
+    this.isExpanded = true;
 }
 
 SelectorEngine.prototype = new GameEngine();
@@ -26,20 +25,27 @@ SelectorEngine.prototype.onMouseMove = function(){
     GameEngine.prototype.initializeInput.call(this);
     
 }*/
-SelectorEngine.prototype.add = function(option){
-    this.options.push(option);
+
+
+SelectorEngine.prototype.initializeOptions = function(data){
+    for (var i = 0; i < data.length; i++){
+        var label = data[i].getName();
+        var option = new OptionElement(0, i*20, 100, 20, label);
+        this.options.push(option);
+        //console.log(this.options[i].label);
+    }
+    this.draw(this.g);
 }
 SelectorEngine.prototype.draw = function(g){
     // override
     GameEngine.prototype.draw.call(this, g);
-    g.fillStyle = "red";
-    g.fillRect(0, 0, this.x, this.y);
     
-    
-}
-SelectorEngine.prototype.initial_state = function(){
-    //
-}
-SelectorEngine.prototype.expanded_state = function(){
-    //
+    if (this.isExpanded === true){
+        for (var i = 0; i < data.length; i++){
+            this.options[i].drawElement(g);
+        }
+    }
+    else{
+        this.options[0].drawElement(g);
+    }    
 }

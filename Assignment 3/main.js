@@ -6,7 +6,9 @@
 
 function initialize(){
     var c = document.getElementById("myCanvas");
-    var selectorMenu = new SelectorEngine();
-    selectorMenu.initialize(c);
+    var areaSelector = new SelectorEngine();
+    var list = data;
+    areaSelector.initializeOptions(list);
+    areaSelector.initialize(c);
 }
 window.onload= initialize;
