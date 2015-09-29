@@ -15,6 +15,21 @@ function SelectorEngine(numOptions, x, y, minH, maxH, w){
     this.isExpanded = false;
 }
 SelectorEngine.prototype = new GameEngine();
+SelectorEngine.prototype.setX = function(x){
+    this.origX = x;
+}
+
+SelectorEngine.prototype.setY = function(y){
+    this.origY = y;
+}
+
+SelectorEngine.prototype.setWidth = function(w){
+    this.width = w;
+}
+SelectorEngine.prototype.setMinHeight = function(minH){
+    this.minHeight = minH;
+}
+
 SelectorEngine.prototype.onMouseClick = function(position){
     GameEngine.prototype.onMouseClick.call(this, position);
     for (var i = 0; i < this.options.length; i++) { //credit: Professor Block
