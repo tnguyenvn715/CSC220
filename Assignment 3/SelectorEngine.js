@@ -38,13 +38,14 @@ SelectorEngine.prototype.isHit = function(mousePos){
         this.isExpanded = false;
     }
     
-    this.draw();
+   
     
 }
 
 SelectorEngine.prototype.addOption = function(option){
     this.options.push(option);
     console.log(option.label);
+    console.log(option.x + " ," + option.y );
 }
 
 SelectorEngine.prototype.draw = function(g){

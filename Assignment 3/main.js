@@ -10,7 +10,7 @@ function initialize(){
     var areaSelector = new SelectorEngine(data.length, 0,0, 20, data.length*20, 100);
     for (var i = 0; i < data.length; i++){
         var label = data[i].getName();
-        var opt = new OptionElement(0, i*this.minHeight, this.width, this.minHeight, label);
+        var opt = new OptionElement(0, i*20, 100, 20, label);
         areaSelector.addOption(opt);
     }
     
