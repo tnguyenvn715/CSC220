@@ -9,7 +9,7 @@ function GameEngine() {
 
 GameEngine.prototype.initializeGraphics = function() {
     this.g = this.canvas.getContext("2d");
-    this.canvas.width = 600;
+    this.canvas.width = 200;
     this.canvas.height = 400;
 }
 

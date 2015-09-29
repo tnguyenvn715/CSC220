@@ -22,22 +22,24 @@ SelectorEngine.prototype.onMouseMove = function(){
     //override
     
 }
-SelectorEngine.prototype.initializeInput = function(){
+/*SelectorEngine.prototype.initializeInput = function(){
     GameEngine.prototype.initializeInput.call(this);
     
-}
+}*/
 SelectorEngine.prototype.add = function(option){
     this.options.push(option);
 }
 SelectorEngine.prototype.draw = function(g){
     // override
-    GameEngine.prototype.draw.call(this);
+    GameEngine.prototype.draw.call(this, g);
+    g.fillStyle = "red";
+    g.fillRect(0, 0, this.x, this.y);
     
     
 }
 SelectorEngine.prototype.initial_state = function(){
-    
+    //
 }
 SelectorEngine.prototype.expanded_state = function(){
-    
+    //
 }
