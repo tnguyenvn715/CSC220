@@ -52,7 +52,7 @@ GameEngine.prototype.initializeTimer = function() {
 }
 
 GameEngine.prototype.onTimerTick = function() {
-    this.update(10);
+    this.update(100);
     this.clear(this.g);
     this.draw(this.g);
 }

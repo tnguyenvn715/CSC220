@@ -15,10 +15,10 @@ function OptionElement(x, y, width, height, label){
     
 }
 OptionElement.prototype.drawElement = function(g){
-    var c=document.getElementById("myCanvas");
-    var g=c.getContext("2d");
+    var c=document.getElementById("myCanvas"); //getting error when not included
+    var g=c.getContext("2d");                  // these two lines
     
-    g.fillStyle =  "black"; 
+    g.fillStyle =  this.isSelected ? "red":"black"; 
     g.strokeRect(this.x, this.y,this.width,this.height);
     var textWidth = g.measureText(this.label).width; //credit: Professor Block
     var xpos = this.width/2 - textWidth/2;

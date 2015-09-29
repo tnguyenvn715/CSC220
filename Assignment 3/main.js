@@ -6,9 +6,14 @@
 
 function initialize(){
     var c = document.getElementById("myCanvas");
-    var areaSelector = new SelectorEngine();
-    var list = data;
-    areaSelector.initializeOptions(list);
+   
+    var areaSelector = new SelectorEngine(data.length, 0,0, 20, data.length*20, 100);
+    for (var i = 0; i < data.length; i++){
+        var label = data[i].getName();
+        var opt = new OptionElement(0, i*this.minHeight, this.width, this.minHeight, label);
+        areaSelector.addOption(opt);
+    }
+    
     areaSelector.initialize(c);
 }
 window.onload= initialize;
