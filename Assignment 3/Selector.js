@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-function SelectorEngine(numOptions, x, y, minH, maxH, w){
-    GameEngine.call(this);
+function Selector(numOptions, x, y, minH, maxH, w){
+    CustomEngine.call(this);
     this.numOptions = numOptions;
     this.origX = x;
     this.origY = y;
@@ -14,36 +14,21 @@ function SelectorEngine(numOptions, x, y, minH, maxH, w){
     this.options = [];
     this.isExpanded = false;
 }
-SelectorEngine.prototype = new GameEngine();
-SelectorEngine.prototype.setX = function(x){
+Selector.prototype = new CustomEngine();
+Selector.prototype.setPosition = function(x, y){
     this.origX = x;
-}
-
-SelectorEngine.prototype.setY = function(y){
     this.origY = y;
 }
 
-SelectorEngine.prototype.setWidth = function(w){
+Selector.prototype.setWidth = function(w){
     this.width = w;
 }
-SelectorEngine.prototype.setMinHeight = function(minH){
+Selector.prototype.setMinHeight = function(minH){
     this.minHeight = minH;
 }
 
-SelectorEngine.prototype.onMouseClick = function(position){
-    GameEngine.prototype.onMouseClick.call(this, position);
-    for (var i = 0; i < this.options.length; i++) { //credit: Professor Block
-        this.options[i].isClicked(position);
-    }
-    this.draw();
-    
-}
-SelectorEngine.prototype.onMouseMove = function(position){
-    GameEngine.prototype.onMouseMove.call(this,position);
-    //override
-    this.isHit(position);   
-}
-SelectorEngine.prototype.isHit = function(mousePos){
+
+Selector.prototype.isHit = function(mousePos){
     if((mousePos.x > 0  && mousePos.x < this.width) 
             && (mousePos.y > 0 && mousePos.y < this.maxHeight) ){
      
@@ -51,22 +36,17 @@ SelectorEngine.prototype.isHit = function(mousePos){
     }
     else{
         this.isExpanded = false;
-    }
-    
-   
-    
+    } 
 }
 
-SelectorEngine.prototype.addOption = function(option){
+Selector.prototype.addOption = function(option){
     this.options.push(option);
     console.log(option.label);
     console.log(option.x + " ," + option.y );
 }
 
-SelectorEngine.prototype.draw = function(g){
-    // override
-    GameEngine.prototype.draw.call(this, g);
-    
+Selector.prototype.draw = function(g){
+    //override 
     if (this.isExpanded === true){
         for (var i = 0; i < this.numOptions; i++){
             this.options[i].drawElement(g);
@@ -76,3 +56,4 @@ SelectorEngine.prototype.draw = function(g){
         this.options[0].drawElement(g);
     }    
 }
+
