@@ -9,8 +9,8 @@ function GameEngine() {
 
 GameEngine.prototype.initializeGraphics = function() {
     this.g = this.canvas.getContext("2d");
-    this.canvas.width = 200;
-    this.canvas.height = 400;
+    this.canvas.width = 800;
+    this.canvas.height = 600;
 }
 
 GameEngine.prototype.initializeInput = function() {
@@ -25,6 +25,8 @@ GameEngine.prototype.initializeInput = function() {
                 this.associatedGameEngine.getLocalCanvasCoordinates(e);
         this.associatedGameEngine.onMouseClick(localCoordinate);
     }
+    
+    
 }
 
 GameEngine.prototype.getLocalCanvasCoordinates = function(e) {
