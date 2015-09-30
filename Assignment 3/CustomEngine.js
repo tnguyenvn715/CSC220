@@ -9,19 +9,19 @@ function CustomEngine(){
 }
 CustomEngine.prototype = new GameEngine();
 
-CustomEngine.prototype.initializeInput = function(canvas){
-    var selector = this.initializeSelector(numOptions, x, y, minH, maxH, w);
+CustomEngine.prototype.addSelector = function(selector){
     selector.draw(this.g);
     this.selectors.push(selector);
 }
+
 CustomEngine.prototype.onMouseClick = function(position){
     GameEngine.prototype.onMouseClick.call(this, position);
     for (var i = 0; i < this.selectors.length; i++) { //credit: Professor Block
         var optionsList = this.selectors[i].options;
         for (var j = 0; j < optionsList.length; j++){
             optionsList[j].isClicked(position);
+            this.selectors[i].draw(this.g);
         }
-        this.selectors[i].draw(this.g);
     }
 }
 CustomEngine.prototype.onMouseMove = function(position){
@@ -32,8 +32,6 @@ CustomEngine.prototype.onMouseMove = function(position){
         this.selectors[i].draw(this.g);
     }
 }
-
-
 CustomEngine.prototype.draw = function(g){
     //override
     GameEngine.prototype.draw.call(this, g);
