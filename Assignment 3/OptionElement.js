@@ -14,14 +14,21 @@ function OptionElement(x, y, width, height, label){
     this.highlightColor = "#cf2435";
     
 }
+
 OptionElement.prototype.drawElement = function(g){
     var c=document.getElementById("myCanvas"); //getting error when not included
     var g=c.getContext("2d");                  // these two lines
-    
-    g.fillStyle =  this.isSelected ? "red":"black"; 
+    g.fillStyle = "white"; 
     g.strokeRect(this.x, this.y,this.width,this.height);
+    g.fillStyle =  this.isSelected ? this.highlightColor:"black"; 
+    g.fillRect(this.x, this.y,this.width,this.height);
+    this.drawText(g); 
+}
+
+OptionElement.prototype.drawText = function(g){
+    g.fillStyle = "white"; 
     var textWidth = g.measureText(this.label).width; //credit: Professor Block
-    var xpos = this.width/2 - textWidth/2;
+    var xpos = this.x + this.width/2 - textWidth/2;
     var ypos = this.y + this.height/2;
     g.fillText(this.label, xpos, ypos);
 }
