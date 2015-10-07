@@ -7,8 +7,6 @@ function CustomGameLoop(){
     GameLoop.call(this);
 }
 CustomGameLoop.prototype = new GameLoop();
-CustomGameLoop.prototype.setCanvasSize = function(width, height){
-    this.canvas.width = width;
-    this.canvas.height= height;
+CustomGameLoop.prototype.updateElement = function(image){
+    image.draw();
 }
-

@@ -3,8 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+function Pointer(id, position ){
+	this.id = id;
+	this.position = position;
+	this.isPropagationCancelled = false;
+}
 
+Pointer.prototype.getPosition = function(){
+	return this.position;
+}
+Pointer.prototype.getId = function(){
+	return this.id;
+}	
 
-function Pointer(){
-    
+Pointer.prototype.cancelPropagation = function(){
+
 }

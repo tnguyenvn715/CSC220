@@ -4,6 +4,21 @@
  * and open the template in the editor.
  */
 
-function Shape(){
-    
+function Shape(thickness, fillColor, strokeColor){
+	
+	this.strokeThickness = thickness;
+	this.fillColor = fillColor;
+	this.strokeColor = strokeColor;
+}
+
+Shape.prototype.setFillColor = function(newFill){
+	this.fillColor = newFill;
+}
+
+Shape.prototype.setStrokeColor = function(newStroke){
+	this.strokeColor = newStroke;
+}
+
+Shape.prototype.setStrokeThickness = function(newthickness){
+	this.strokeThickness = newthickness;
 }
