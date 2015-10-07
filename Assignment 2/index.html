@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .dropDown select {
+                border : 0;
+                width: 130px;
+                font-size: 12px;
+                margin: 2px;
+                padding-right: 10px;
+                height: 20px;
+                -moz-appearance: none;
+                
+            }
+        </style>
+        
+        <script type ="text/javascript" src="data.js"></script>
+        <script type ="text/javascript" src="Chart.js"></script>
+        <script type ="text/javascript" src="BarChart.js"></script>
+        <script type ="text/javascript" src="LineChart.js"></script>
+        <script type ="text/javascript" src="main.js"></script>
+
+    </head>
+    <body >
+        
+        <div class="dropDown">
+            <select id="dataselector" onchange = "initialize()">
+                <option value="0">Northampton</option>
+                <option value="1">Amherst</option>
+                <option value="2">Easthampton</option>
+            </select>
+            <select id="typeselector" onchange = "initialize()">
+                <option value="0">Bar Chart</option>
+                <option value="1">Line Chart</option>
+                
+            </select>
+        </div>
+        <div id="header" style = "width: 800px; color:#FFFFFF; background-color:#000000; padding-top: 5px; padding-bottom: 5px;" ></div>
+        <canvas id="myCanvas" width="800" height="800" style="border:1px solid #000000;">
+        </canvas> 
+        <div id = "demo"></div>
+    </body>
+</html>
+
