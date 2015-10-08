@@ -9,6 +9,10 @@ function setupTestScenario(g) {
     var backgroundImage = new BackgroundImage(new Point(0, 0),500, 700);
     backgroundImage.loadUrl('img_the_scream.jpg');
     
+    var backgroundImage2 = new BackgroundImage(new Point(400, 100),60, 70);
+    
+    backgroundImage2.loadUrl('kitten1.jpg');
+    
     var customGameLoop = new CustomGameLoop();
     customGameLoop.initialize(document.getElementById("canvas"));
     var bluePanel = new Rectangle();
@@ -34,6 +38,7 @@ function setupTestScenario(g) {
     //backgroundImage.addChild(greenPanel);
 
     customGameLoop.addElement(backgroundImage);
+    customGameLoop.addElement(backgroundImage2);
     customGameLoop.addElement(greenPanel);
     customGameLoop.addElement(bluePanel);
     customGameLoop.addElement(redPanel);
