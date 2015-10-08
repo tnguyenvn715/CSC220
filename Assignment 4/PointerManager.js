@@ -4,9 +4,10 @@
  * and open the template in the editor.
  */
 
-function PointerManager(elements){
+function PointerManager(elManager){
     this.pointers = {};
-    this.elementManager = elements;
+    this.elementManager = elManager;
+    
 }
 PointerManager.prototype.onPointerEnter = function(id, position) {
     this.addPointer(id, position);
@@ -43,16 +44,11 @@ PointerManager.prototype.addPointer = function(id, initialPosition) {
 
 PointerManager.prototype.movePointer = function(id, position) {
     this.pointers[id].move(position);
-    
+    if (this.pointers[id].dragElement != null){
+        this.pointers[id].dragElement.updatePosition(position);
+    }
 }
 
 PointerManager.prototype.removePointer = function(id, position) {
     delete this.pointers[id];
-}
-
-PointerManager.prototype.drawPointerDebugOverlay = function(g) {
-    for (var id in this.pointers) {
-        this.pointers[id].drawDebugOverlay(g);
-       
-    }
 }
