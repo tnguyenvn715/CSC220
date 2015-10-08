@@ -32,18 +32,3 @@ Pointer.prototype.activate = function() {
 Pointer.prototype.deactivate = function() {
     this.isActive = false;
 }
-
-
-Pointer.prototype.drawDebugOverlay = function(g) {
-    g.strokeStyle = "black";
-    g.fillStyle = "black";
-    g.font = "10px Arial"
-   
-    var position = this.getPosition();
-    
-    g.beginPath();
-    g.rect(position.getX() - 20, position.getY() - 20, 40, 40);
-    g.stroke();
-    g.fillText(this.id, position.getX() - 20, position.getY() - 20 - 3);
-    g.globalAlpha = 1.0;
-}
