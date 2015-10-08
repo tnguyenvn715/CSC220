@@ -7,7 +7,11 @@
 function PointerManager(elManager){
     this.pointers = {};
     this.elementManager = elManager;
+    this.offsetX;
+    this.offsetY;
 }
+
+
 PointerManager.prototype.onPointerEnter = function(id, position) {
     this.addPointer(id, position);
 }
@@ -21,12 +25,19 @@ PointerManager.prototype.onPointerActivate = function(id, position) {
     //retrieve the draggable element here
     this.pointers[id].dragElement = 
         this.elementManager.retrieveElement(position);
+    if (this.pointers[id].dragElement != null){
+        this.offsetX = this.pointers[id].getOffSet()[0];
+        this.offsetY = this.pointers[id].getOffSet()[1];
+    }
+  
 }
 
 PointerManager.prototype.onPointerDeactivate = function(id, position) {
     this.pointers[id].deactivate();
     //make dragElement null when not active
     this.pointers[id].dragElement = null;
+    this.offsetX = null;
+    this.offsetY = null;
 }
 
 PointerManager.prototype.onPointerLeave = function(id, position) {
@@ -43,8 +54,11 @@ PointerManager.prototype.addPointer = function(id, initialPosition) {
 
 PointerManager.prototype.movePointer = function(id, position) {
     this.pointers[id].move(position);
-    if (this.pointers[id].dragElement != null){
-        this.pointers[id].dragElement.updatePosition(position);
+    if (this.pointers[id].dragElement != null ){
+        var x = position.getX() - this.offsetX;
+        var y = position.getY() - this.offsetY;
+        var destPos = new Point(x, y);
+        this.pointers[id].dragElement.updatePosition(destPos);
     }
 }
 

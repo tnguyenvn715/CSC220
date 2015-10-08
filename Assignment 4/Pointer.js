@@ -28,3 +28,10 @@ Pointer.prototype.activate = function() {
 Pointer.prototype.deactivate = function() {
     this.isActive = false;
 }
+
+Pointer.prototype.getOffSet = function(){
+    var pos = this.dragElement.getPosition();
+    var xdiff = this.position.subtract(pos).getX();
+    var ydiff = this.position.subtract(pos).getY();
+    return [xdiff,ydiff];
+}
