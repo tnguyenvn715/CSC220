@@ -9,9 +9,9 @@ function DraggableElement(position,  width, height, thickness, fillColor, stroke
 }
 DraggableElement.prototype = new Visual();
     
-DraggableElement.prototype.update = function(position){
-    this.x =  position.x;
-    this.y = position.y;
+DraggableElement.prototype.updatePosition = function(position){
+    this.position.x =  position.x;
+    this.position.y = position.y;
    
 }
 
