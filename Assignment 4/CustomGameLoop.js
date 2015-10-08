@@ -42,7 +42,8 @@ CustomGameLoop.prototype.addElement = function (element) {
     this.elementManager.addElement(element);
 }
 
-CustomGameLoop.prototype.draw = function(g) {
-    this.elementManager.draw(g); 
-}
 
+CustomGameLoop.prototype.draw = function(g) {
+    this.elementManager.draw(g);
+    
+}

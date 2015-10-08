@@ -10,8 +10,6 @@ function Visual (position,  width, height) {
     this.children = [];
     this.isClicked = false;
 }
-
-
 Visual.prototype.getWidth = function(){
     return this.width;
 }
@@ -35,35 +33,13 @@ Visual.prototype.setFillColor = function(color) {
     this.fillColor = color;
 }
 Visual.prototype.draw = function(g) {
-    //
+    //override
 }
-
-Visual.prototype.addChild = function(element) {
-    this.children.push(element);
-}
-
-Visual.prototype.propagateOnPointerActive = function(e) {
-    
-}
-
-Visual.prototype.onPreviewPointerActive = function(e) {
-    
-}
-
-Visual.prototype.onPointerActive = function(e) {
-    
-}
-
-Visual.prototype.parentPointToLocal = function(p) {
-    
-}
-
 
 Visual.prototype.hitTest = function(mousePos) {
     if((mousePos.x > this.position.x  && mousePos.x < (this.position.x+ this.width)) 
             && (mousePos.y > this.position.y && mousePos.y < (this.position.x+ this.width)) ){
-        return true;
-       
+        return true; 
     }
     else{
         return false;

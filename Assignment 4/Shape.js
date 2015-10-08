@@ -5,7 +5,7 @@
  */
 
 function Shape(position, width, height, thickness, fillColor, strokeColor){
-    DraggableElement.call(this, position, width, height, thickness, fillColor, strokeColor);
+    DraggableElement.call(this, position, width, height);
     this.strokeThickness = thickness;
     this.fillColor = fillColor;
     this.strokeColor = strokeColor;

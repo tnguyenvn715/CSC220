@@ -11,7 +11,6 @@ Circle.prototype = new Shape();
 
 Circle.prototype.draw = function(g){
     g.save();
-    
     g.beginPath();
     g.arc(this.position.x + this.width/2, this.position.y + this.width/2, this.width/2, 0, 2 * Math.PI);
     g.fillStyle = this.fillColor;
@@ -19,8 +18,5 @@ Circle.prototype.draw = function(g){
     g.lineWidth = this.strokeThickness;
     g.strokeStyle = this.strokeColor;
     g.stroke();
-    for (var i = 0; i < this.children.length; i++) {
-        this.children[i].draw(g);
-    }
     g.restore();
 }

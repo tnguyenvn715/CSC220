@@ -15,7 +15,6 @@ DraggableElement.prototype.updatePosition = function(position){
    
 }
 
-
 DraggableElement.prototype.draw = function(g){
-    //
+    //override
 }

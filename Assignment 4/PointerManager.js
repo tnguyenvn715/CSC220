@@ -7,7 +7,6 @@
 function PointerManager(elManager){
     this.pointers = {};
     this.elementManager = elManager;
-    
 }
 PointerManager.prototype.onPointerEnter = function(id, position) {
     this.addPointer(id, position);

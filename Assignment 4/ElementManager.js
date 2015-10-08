@@ -14,15 +14,13 @@ ElementManager.prototype.retrieveElement = function(position){
     var topMostVisual;
     for (var i = 0; i < this.visuals.length; i++){
         if (this.visuals[i].hitTest(position) == true && 
-                    this.visuals[i].draggable == true){
+                this.visuals[i].draggable == true){
             topMostVisual = this.visuals[i];
         }
     }
     return topMostVisual;
 }
-ElementManager.prototype.onPointerActivate = function(id, p) {
-    
-}
+
 ElementManager.prototype.draw = function(g){
     for (var i = 0; i < this.visuals.length; i++){        
 	this.visuals[i].draw(g);

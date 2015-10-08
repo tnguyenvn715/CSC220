@@ -6,13 +6,9 @@
 function Rectangle(position, width, height, thickness, fillColor, strokeColor){
     Shape.call(this,position, width, height, thickness, fillColor, strokeColor);
 }
-
 Rectangle.prototype = new Shape();
-
-
 Rectangle.prototype.draw = function(g){
     g.save();
-    
     g.beginPath();
     g.rect(this.position.x,this.position.y,this.width,this.height);
     g.closePath();
@@ -21,9 +17,5 @@ Rectangle.prototype.draw = function(g){
     g.lineWidth = this.strokeThickness;
     g.strokeStyle = this.strokeColor;
     g.stroke();
-    for (var i = 0; i < this.children.length; i++) {
-        this.children[i].draw(g);
-    }
-    //g.restore();
+    g.restore();
  }
-

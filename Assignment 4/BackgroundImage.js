@@ -5,21 +5,15 @@
  */
 function BackgroundImage(position, width, height){
     Visual.call(this, position, width, height);
-   
 }
 BackgroundImage.prototype = new Visual();
 BackgroundImage.prototype.loadUrl = function(url){
     this.img = new Image();
     this.img.src  = url;
 }
-
-
 BackgroundImage.prototype.draw = function(g){
     g.save();
     g.drawImage(this.img, this.position.x, this.position.y,this.width, this.height);
-    for (var i = 0; i < this.children.length; i++) {
-        this.children[i].draw(g);
-    }
     g.restore();
 
 }

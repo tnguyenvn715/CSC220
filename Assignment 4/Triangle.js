@@ -11,7 +11,6 @@ Triangle.prototype = new Shape();
 
 Triangle.prototype.draw = function(g){
     g.save();
-   
     g.beginPath();
     g.moveTo(this.position.x, this.position.y);
     g.lineTo(this.position.x + this.width / 2, this.position.y + this.height);
@@ -22,8 +21,5 @@ Triangle.prototype.draw = function(g){
     g.lineWidth = this.strokeThickness;
     g.strokeStyle =  this.strokeColor;
     g.stroke();
-    for (var i = 0; i < this.children.length; i++) {
-        this.children[i].draw(g);
-    }
     g.restore();
 }

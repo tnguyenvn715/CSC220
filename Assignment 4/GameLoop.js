@@ -1,3 +1,4 @@
+// <editor-fold desc="Point">
 function Point(x, y)
 {
     this.setX(x);

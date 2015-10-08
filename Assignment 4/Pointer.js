@@ -12,7 +12,6 @@ function Pointer(id, position){
 Pointer.prototype.move = function(position) {
     this.position.setX(position.getX());
     this.position.setY(position.getY());
-   
 }
 Pointer.prototype.getPosition = function(){
     return this.position;
@@ -20,15 +19,12 @@ Pointer.prototype.getPosition = function(){
 Pointer.prototype.getId = function(){
     return this.id;
 }	
-
 Pointer.prototype.getIsActive = function() {
     return this.isActive;
 }
-
 Pointer.prototype.activate = function() {
     this.isActive = true;
 }
-
 Pointer.prototype.deactivate = function() {
     this.isActive = false;
 }
