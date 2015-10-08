@@ -42,11 +42,7 @@ CustomGameLoop.prototype.addElement = function (element) {
     this.elementManager.addElement(element);
 }
 
-CustomGameLoop.prototype.update = function(elapsedMilliseconds){
-    //return setInterval(this.draw(this.g), elapsedMilliseconds);
-}
 CustomGameLoop.prototype.draw = function(g) {
-    this.elementManager.draw(g);
-    this.pointerManager.drawPointerDebugOverlay(g);
+    this.elementManager.draw(g); 
 }
 
