@@ -5,43 +5,43 @@
  */
 
 function setupTestScenario(g) {
-  
-    var backgroundImage = new BackgroundImage(new Point(0, 0),500, 700);
-    backgroundImage.loadUrl('img_the_scream.jpg');
+    var gameLoop = new CustomGameLoop();
+    gameLoop.initialize(document.getElementById("canvas"));
+    gameLoop.setCanvasSize(640, 480);
     
-    var backgroundImage2 = new BackgroundImage(new Point(400, 100),60, 70);
+    var backgroundImage = new BackgroundImage();
+    backgroundImage.loadUrl("kitten1.jpg");
+    backgroundImage.setPosition(new Point(200, 30));
+    backgroundImage.setWidth(350);
+    backgroundImage.setHeight(420);
+    gameLoop.addElement(backgroundImage);
     
-    backgroundImage2.loadUrl('kitten1.jpg');
+    var rectangle = new Rectangle();
+    rectangle.setPosition(new Point(100, 60));
+    rectangle.setWidth(200);
+    rectangle.setHeight(150);
+    rectangle.setFillColor("red");
+    rectangle.setStrokeColor("orange");
+    rectangle.setStrokeThickness(5);
+    gameLoop.addElement(rectangle);
     
-    var customGameLoop = new CustomGameLoop();
-    customGameLoop.initialize(document.getElementById("canvas"));
-    var bluePanel = new Rectangle();
-    bluePanel.setPosition(new Point(60, 60));
-    bluePanel.setWidth(200);
-    bluePanel.setHeight(200);
-    bluePanel.setFillColor("blue");
-    //backgroundImage.addChild(bluePanel);
-    
-    var redPanel = new Triangle();
-    redPanel.setPosition(new Point(500, 10));
-    redPanel.setWidth(200);
-    redPanel.setHeight(200);
-    redPanel.setFillColor("red");
-    //backgroundImage.addChild(redPanel);
-    //customGameLoop.addElement(redPanel);
-    
-    var greenPanel = new Circle();
-    greenPanel.setPosition(new Point(10, 10));
-    greenPanel.setWidth(100);
-    greenPanel.setHeight(20);
-    greenPanel.setFillColor("green");
-    //backgroundImage.addChild(greenPanel);
+    var circle = new Circle();
+    circle.setPosition(new Point(170, 140));
+    circle.setWidth(150);
+    circle.setHeight(110);
+    circle.setFillColor("#2BBDBD");
+    circle.setStrokeColor("orange");
+    circle.setStrokeThickness(5);
+    gameLoop.addElement(circle);
 
-    customGameLoop.addElement(backgroundImage);
-    customGameLoop.addElement(backgroundImage2);
-    customGameLoop.addElement(greenPanel);
-    customGameLoop.addElement(bluePanel);
-    customGameLoop.addElement(redPanel);
+    var triangle = new Triangle();
+    triangle.setPosition(new Point(500, 200));
+    triangle.setWidth(100);
+    triangle.setHeight(200);
+    triangle.setFillColor("purple");
+    triangle.setStrokeColor("white");
+    triangle.setStrokeThickness(2);
+    gameLoop.addElement(triangle);
 }
 
 function initialize() {
