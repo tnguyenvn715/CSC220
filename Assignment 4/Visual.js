@@ -7,14 +7,11 @@ function Visual (position,  width, height) {
     this.position = position;
     this.width = width;
     this.height = height;
+    this.children = [];
+    this.isClicked = false;
 }
 
-Visual.prototype.getPosition = function(){
-    return this.position;
-}
-Visual.prototype.setPosition = function(newpos){
-    this.position = newpos;
-}
+
 Visual.prototype.getWidth = function(){
     return this.width;
 }
@@ -27,31 +24,48 @@ Visual.prototype.getHeight = function(){
 Visual.prototype.setHeight = function(newheight){
     this.height = newheight;
 }
-Visual.prototype.setBackgroundColor = function(newColor){
-	
+Visual.prototype.setPosition = function(position) {
+    this.position = position.clone();
 }
 
-Visual.prototype.hitTest = function(position){
-	
+Visual.prototype.getPosition = function() {
+    return this.position.clone();
+}
+Visual.prototype.setFillColor = function(color) {
+    this.fillColor = color;
+}
+Visual.prototype.draw = function(g) {
+    //
 }
 
-Visual.prototype.propagateOnPointerActivate = function(e){
-
-
+Visual.prototype.addChild = function(element) {
+    this.children.push(element);
 }
 
-Visual.prototype.addChild = function ( visual){
+Visual.prototype.propagateOnPointerActive = function(e) {
+    
+}
+
+Visual.prototype.onPreviewPointerActive = function(e) {
+    
+}
+
+Visual.prototype.onPointerActive = function(e) {
+    
+}
+
+Visual.prototype.parentPointToLocal = function(p) {
+    
 }
 
 
-Visual.prototype.parentPointToLocal = function (p){
+Visual.prototype.hitTest = function(mousePos) {
+    if((mousePos.x > this.position.x  && mousePos.x < (this.position.x+ this.width)) 
+            && (mousePos.y > this.position.y && mousePos.y < (this.position.x+ this.width)) ){
+        return true;
+       
+    }
+    else{
+        return false;
+    }
 }
-
-Visual.prototype.onPreviewPointerActivate  = function(  p ){
-
-}
-
-Visual.prototype.onPointerActivate  = function(  p ){
-
-}
-

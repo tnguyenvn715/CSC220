@@ -3,37 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-function BackgroundImage(){
-    Visual.call(this);
+function BackgroundImage(position, width, height){
+    Visual.call(this, position, width, height);
+   
 }
 BackgroundImage.prototype = new Visual();
 BackgroundImage.prototype.loadUrl = function(url){
-    var can = document.getElementById('canvas');
-    var g = can.getContext('2d');
-    var img = new Image();
-    this.draw(g, img);
-    img.src = url;
-    
+    this.img = new Image();
+    this.img.src  = url;
 }
 
-BackgroundImage.prototype.setPosition =function(position){
-    this.x = position.getX;
-    this.y = position.getY;
-}
 
-BackgroundImage.prototype.setWidth =function(width){
-    this.width = width;
-}
+BackgroundImage.prototype.draw = function(g){
+    g.save();
+    g.drawImage(this.img, this.position.x, this.position.y,this.width, this.height);
+    for (var i = 0; i < this.children.length; i++) {
+        this.children[i].draw(g);
+    }
+    g.restore();
 
-BackgroundImage.prototype.setHeight =function(height){
-    this.height= height;
-}
-BackgroundImage.prototype.draw = function(g, img){
-    img.onload = function(){
-        g.canvas.width  = window.innerWidth;
-        g.canvas.height = window.innerHeight;
-        g.drawImage(img, 0, 0);
-    };
-    
 }
 

@@ -6,12 +6,25 @@
 function ElementManager(){
     this.visuals = [];
 }
-ElementManager.prototype.addVisual = function(visual){
-    this.visuals.append(visual);
+ElementManager.prototype.addElement = function(element){
+    this.visuals.push(element);
 }
 
-ElementManager.prototype.drawAllVisuals = function(){
+ElementManager.prototype.retrieveElement = function(position){
+    var topMostVisual;
     for (var i = 0; i < this.visuals.length; i++){
-	this.visuals[i].draw();
+        if (this.visuals[i].hitTest(position) == true && 
+                    this.visuals[i].draggable == true){
+            topMostVisual = this.visuals[i];
+        }
+    }
+    return topMostVisual;
+}
+ElementManager.prototype.onPointerActivate = function(id, p) {
+    
+}
+ElementManager.prototype.draw = function(g){
+    for (var i = 0; i < this.visuals.length; i++){        
+	this.visuals[i].draw(g);
     }
 }

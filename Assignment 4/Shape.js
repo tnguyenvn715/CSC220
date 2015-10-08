@@ -4,21 +4,25 @@
  * and open the template in the editor.
  */
 
-function Shape(thickness, fillColor, strokeColor){
-	
-	this.strokeThickness = thickness;
-	this.fillColor = fillColor;
-	this.strokeColor = strokeColor;
+function Shape(position, width, height, thickness, fillColor, strokeColor){
+    DraggableElement.call(this, position, width, height, thickness, fillColor, strokeColor);
+    this.strokeThickness = thickness;
+    this.fillColor = fillColor;
+    this.strokeColor = strokeColor;
 }
-
+Shape.prototype = new DraggableElement();
 Shape.prototype.setFillColor = function(newFill){
-	this.fillColor = newFill;
+    this.fillColor = newFill;
 }
 
 Shape.prototype.setStrokeColor = function(newStroke){
-	this.strokeColor = newStroke;
+    this.strokeColor = newStroke;
 }
 
 Shape.prototype.setStrokeThickness = function(newthickness){
-	this.strokeThickness = newthickness;
+    this.strokeThickness = newthickness;
+}
+
+Shape.prototype.draw = function(g){
+    //override
 }

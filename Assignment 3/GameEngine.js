@@ -40,6 +40,7 @@ GameEngine.prototype.getLocalCanvasCoordinates = function(e) {
 }
 
 GameEngine.prototype.onMouseClick = function(position) {
+    //
 }
 
 GameEngine.prototype.onMouseMove = function(position) {

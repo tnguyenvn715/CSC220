@@ -1,4 +1,3 @@
-// <editor-fold desc="Point">
 function Point(x, y)
 {
     this.setX(x);
@@ -46,7 +45,7 @@ GameLoop.Settings = {
 GameLoop.prototype.initializeGraphics = function() {
     this.g = this.canvas.getContext("2d");
     this.canvas.width = 600;
-    this.canvas.height = 400;
+    this.canvas.height = 600;
 }
 
 GameLoop.prototype.initializeInput = function() {
@@ -149,22 +148,23 @@ GameLoop.prototype.getLocalCanvasCoordinates = function(arg1, arg2) {
 GameLoop.prototype.onMouseEnter = function(position) {
     // override
     this.onPointerEnter(
-            GameLoop.Settings.Input.MOUSE_ID, 
-            new Point(position.x, position.y));
+        GameLoop.Settings.Input.MOUSE_ID, 
+        new Point(position.x, position.y));
 }
 
 GameLoop.prototype.onMouseDown = function(position) {
     // override
+    
     this.onPointerActivate(
-            GameLoop.Settings.Input.MOUSE_ID, 
-            new Point(position.x, position.y));
+        GameLoop.Settings.Input.MOUSE_ID, 
+        new Point(position.x, position.y));
 }
 
 GameLoop.prototype.onMouseUp = function(position) {
     // override
     this.onPointerDeactivate(
-            GameLoop.Settings.Input.MOUSE_ID, 
-            new Point(position.x, position.y));
+        GameLoop.Settings.Input.MOUSE_ID, 
+        new Point(position.x, position.y));
 }
 
 GameLoop.prototype.onMouseMove = function(position) {
