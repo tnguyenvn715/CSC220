@@ -12,9 +12,13 @@ CustomGameLoop.prototype = new GameLoop();
 CustomGameLoop.prototype.initialize = function(canvas) {
     GameLoop.prototype.initialize.call(this, canvas);
     this.g = this.canvas.getContext("2d");
-    
     this.elementManager = new ElementManager();
     this.pointerManager = new PointerManager(this.elementManager);
+}
+
+CustomGameLoop.prototype.setCanvasSize = function(width, height) {
+   this.canvas.width = width;
+   this.canvas.height = height;
 }
 
 CustomGameLoop.prototype.onPointerEnter = function(id, position) {
