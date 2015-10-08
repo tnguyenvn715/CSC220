@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-function DraggableElement(position,  width, height, thickness, fillColor, strokeColor){
+function DraggableElement(position,  width, height){
     Visual.call(this, position,  width, height);
     this.draggable = true;
 }
