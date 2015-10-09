@@ -4,25 +4,25 @@
  * and open the template in the editor.
  */
 function ElementManager(){
-    this.visuals = [];
+    this.elements = [];
 }
 ElementManager.prototype.addElement = function(element){
-    this.visuals.push(element);
+    this.elements.push(element);
 }
 
 ElementManager.prototype.retrieveElement = function(position){
     var topMostVisual;
-    for (var i = 0; i < this.visuals.length; i++){
-        if (this.visuals[i].hitTest(position) == true && 
-                this.visuals[i].draggable == true){
-            topMostVisual = this.visuals[i];
+    for (var i = 0; i < this.elements.length; i++){
+        if (this.elements[i].hitTest(position) == true && 
+                this.elements[i].draggable == true){
+            topMostVisual = this.elements[i];
         }
     }
     return topMostVisual;
 }
 
 ElementManager.prototype.draw = function(g){
-    for (var i = 0; i < this.visuals.length; i++){        
-	this.visuals[i].draw(g);
+    for (var i = 0; i < this.elements.length; i++){        
+	this.elements[i].draw(g);
     }
 }
