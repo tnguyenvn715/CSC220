@@ -1,3 +1,4 @@
+//CLASS PROVIDED BY PROFESSOR BLOCK
 // <editor-fold desc="Point">
 function Point(x, y) {
     this.setX(x);

@@ -18,10 +18,10 @@ function setupTestScenario(g) {
     
     var rectangle = new Rectangle();
     rectangle.setPosition(new Point(100, 60));
-    rectangle.setWidth(200);
+    rectangle.setWidth(150);
     rectangle.setHeight(150);
-    rectangle.setFillColor("red");
-    rectangle.setStrokeColor("orange");
+    rectangle.setFillColor("orange");
+    rectangle.setStrokeColor("gold");
     rectangle.setStrokeThickness(5);
     gameLoop.addElement(rectangle);
     
@@ -29,8 +29,8 @@ function setupTestScenario(g) {
     circle.setPosition(new Point(170, 140));
     circle.setWidth(150);
     circle.setHeight(110);
-    circle.setFillColor("#2BBDBD");
-    circle.setStrokeColor("orange");
+    circle.setFillColor("aquamarine");
+    circle.setStrokeColor("SteelBlue");
     circle.setStrokeThickness(5);
     gameLoop.addElement(circle);
 
@@ -38,15 +38,13 @@ function setupTestScenario(g) {
     triangle.setPosition(new Point(500, 200));
     triangle.setWidth(100);
     triangle.setHeight(200);
-    triangle.setFillColor("purple");
+    triangle.setFillColor("red");
     triangle.setStrokeColor("white");
-    triangle.setStrokeThickness(2);
+    triangle.setStrokeThickness(3);
     gameLoop.addElement(triangle);
 }
 
 function initialize() {
-    
-    
     setupTestScenario();
 }
 

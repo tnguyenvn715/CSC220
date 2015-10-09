@@ -29,7 +29,6 @@ CustomGameLoop.prototype.onPointerMove = function(id, position) {
     this.pointerManager.onPointerMove(id, position);
 }
 
-
 CustomGameLoop.prototype.onPointerActivate = function(id, position) {
     this.pointerManager.onPointerActivate(id, position);
 }
@@ -46,8 +45,6 @@ CustomGameLoop.prototype.addElement = function (element) {
     this.elementManager.addElement(element);
 }
 
-
 CustomGameLoop.prototype.draw = function(g) {
-    this.elementManager.draw(g);
-    
+    this.elementManager.draw(g);  
 }

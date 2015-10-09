@@ -13,8 +13,8 @@ BackgroundImage.prototype.loadUrl = function(url){
 }
 BackgroundImage.prototype.draw = function(g){
     g.save();
-    g.drawImage(this.img, this.position.x, this.position.y,this.width, this.height);
+    g.drawImage(this.img, this.position.x, this.position.y,
+                this.width, this.height);
     g.restore();
-
 }
 

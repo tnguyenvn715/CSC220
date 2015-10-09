@@ -29,7 +29,6 @@ PointerManager.prototype.onPointerActivate = function(id, position) {
         this.offsetX = this.pointers[id].getOffSet()[0];
         this.offsetY = this.pointers[id].getOffSet()[1];
     }
-  
 }
 
 PointerManager.prototype.onPointerDeactivate = function(id, position) {

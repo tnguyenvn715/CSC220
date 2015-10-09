@@ -18,4 +18,4 @@ Rectangle.prototype.draw = function(g){
     g.strokeStyle = this.strokeColor;
     g.stroke();
     g.restore();
- }
+}
