@@ -12,9 +12,9 @@ Triangle.prototype = new Shape();
 Triangle.prototype.draw = function(g){
     g.save();
     g.beginPath();
-    g.moveTo(this.position.x, this.position.y);
-    g.lineTo(this.position.x + this.width / 2, this.position.y + this.height);
-    g.lineTo(this.position.x - this.width / 2, this.position.y + this.height);
+    g.moveTo(this.position.x , this.position.y + this.height);
+    g.lineTo(this.position.x + this.width / 2, this.position.y);
+    g.lineTo(this.position.x + this.width, this.position.y + this.height);
     g.closePath();
     g.fillStyle = this.fillColor;
     g.fill();
