@@ -6,13 +6,27 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Multitouch</title>
+        <title>Tam's Big Project</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="game_loop.js"></script>
-        <script src="multi_touch_demo.js"></script>
+        <script src="GameLoop.js"></script>
+        <script src="inputBox.js"></script>
+        <script src="Resource.js"></script>
+        <script src="Bar.js"></script>
+        <script src ="BarManager.js"></script>
+        <script src ="Timer.js"></script>
+        <script src ="CustomGameLoop.js"></script>
+        <script src ="main.js"></script>
+        <style>
+            h1 { color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 55px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center; }
+        </style>
+        
     </head>
     <body>
-        <canvas id="canvas"></canvas>
+    <div>
+        <h1 id="demo"></h1>
+        <canvas id="myCanvas" width="800" height="800" >
+        </canvas> 
+    </div>
     </body>
 </html>
