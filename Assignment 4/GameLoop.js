@@ -225,11 +225,11 @@ GameLoop.prototype.initializeTimer = function() {
     var engine = this;
     setInterval(function() {
         engine.onTimerTick();
-    }, 10);
+    }, 3000);
 }
 
 GameLoop.prototype.onTimerTick = function() {
-    this.update(10);
+    this.update(3000);
     this.clear(this.g);
     this.draw(this.g);
 }
