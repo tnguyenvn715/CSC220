@@ -3,26 +3,57 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-function Timer(x, y, g, width, startYear, endYear){
+function Timer(x, y, g, length, startYear, endYear){
     this.x = x;
     this.y = y;
     this.g = g;
-    this.width= width;
+    this.length= length;
     this.label = startYear;
     this.startYear = startYear;
     this.endYear = endYear;
-    
-    
+}
+
+Timer.prototype.getX = function(){
+    return this.x;
+}
+
+Timer.prototype.getY = function(){
+    return this.y;
+}
+
+Timer.prototype.getStartYear = function(){
+    return this.startYear;
+}
+
+Timer.prototype.getEndYear = function(){
+    return this.endYear;
+}
+
+Timer.prototype.getLabel = function(){
+    return this.label;
+}
+
+Timer.prototype.updateYearLabel = function(newYear){
+    this.label = newYear;
+}
+Timer.prototype.setX = function(x){
+    this.x = x;
+}
+Timer.prototype.setY = function(y){
+    this.y = y;
+}
+Timer.prototype.setLength = function(length){
+    this.length = length;
+}
+Timer.prototype.getScaleIncrement = function(){
+    var increment = this.length/(parseInt(this.endYear)- parseInt(this.startYear));
+    return increment;
 }
 Timer.prototype.updatePosition = function(x, y){
     this.x = x;
     this.y = y;
-   
 }
-Timer.prototype.updateYear = function(newYear){
-    this.label = newYear;
-}
-Timer.prototype.drawScale = function( x, y, width, height, radius, fill, stroke){
+Timer.prototype.drawScale = function(g, x, y, length, height, radius, fill, stroke){
     if (typeof stroke == "undefined" ) {
         stroke = true;
     }
@@ -30,38 +61,37 @@ Timer.prototype.drawScale = function( x, y, width, height, radius, fill, stroke)
         radius = 5;
     }
   
-    this.g.beginPath();
-    this.g.rect(x, y,width, height);
-    this.g.closePath();
-    this.g.fillStyle = 'gray';
+    g.beginPath();
+    g.rect(x, y,length, height);
+    g.closePath();
+    g.fillStyle = 'gray';
    
-    this.g.lineWidth = 2;
-    this.g.strokeStyle = 'black';
+    g.lineWidth = 2;
+    g.strokeStyle = 'black';
 
     if (stroke) {
-        this.g.stroke();
+        g.stroke();
      }
     if (fill) {
-        this.g.fill();
+        g.fill();
     }        
 }
 
-Timer.prototype.drawLabel = function(){
-    this.g.fillStyle = 'black';
-    this.g.font = '12pt Times'; 
-    this.g.fillText(this.label, this.x - 20 ,this.y + 25);
+Timer.prototype.drawLabel = function(g){
+    g.fillStyle = 'black';
+    g.font = '12pt Times'; 
+    g.fillText(this.label, this.x - 20 ,this.y + 25);
 }
-Timer.prototype.draw = function(){
-    this.drawScale(10, this.y , this.width, 5, 10, true);
-    this.drawLabel();
-    this.g.beginPath();
-    this.g.arc(this.x, this.y, 10, 0, 2 * Math.PI, false);
-    this.g.fillStyle = 'red';
-    this.g.fill();
-    this.g.lineWidth = 1;
-    this.g.strokeStyle = 'black';
-    this.g.stroke();
-    
+Timer.prototype.draw = function(g){
+    this.drawScale(g, 10, this.y , this.length, 5, 10, true);
+    this.drawLabel(g);
+    g.beginPath();
+    g.arc(this.x, this.y, 10, 0, 2 * Math.PI, false);
+    g.fillStyle = 'red';
+    g.fill();
+    g.lineWidth = 1;
+    g.strokeStyle = 'black';
+    g.stroke();
     
 }
 
