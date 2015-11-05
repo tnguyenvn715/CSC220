@@ -5,7 +5,7 @@
  */
 
 
-function initialize() {
+/*function initialize() {
     
     var gameLoop = new CustomGameLoop();
     gameLoop.initialize(document.getElementById("myCanvas"));
@@ -15,4 +15,4 @@ function initialize() {
     //timer.draw();
 }
 
-window.onload = initialize;
+window.onload = initialize;*/
