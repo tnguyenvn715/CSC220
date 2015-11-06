@@ -45,8 +45,8 @@ GameLoop.Settings = {
 
 GameLoop.prototype.initializeGraphics = function() {
     this.g = this.canvas.getContext("2d");
-    this.canvas.width = 600;
-    this.canvas.height = 400;
+    this.canvas.width = 900;
+    this.canvas.height = 900;
 }
 
 GameLoop.prototype.initializeInput = function() {
