@@ -7,6 +7,7 @@ CustomGameLoop.prototype = new GameLoop();
 
 CustomGameLoop.prototype.initialize = function(canvas) {
     GameLoop.prototype.initialize.call(this, canvas);
+    
     this.inputManager = new InputManager();
     this.g = this.canvas.getContext("2d");
     this.input = new inputBox();
@@ -48,11 +49,7 @@ CustomGameLoop.prototype.onPointerLeave = function(id, position) {
 
 
 CustomGameLoop.prototype.draw = function(g) {
-    var test = this.data.getLoadedString();
-    var dataSet = new DataSet("Ice Data"); 
-    dataSet.convertToArray(test);
-    this.moveSlider();
-    this.timer.draw(this.g);
+    
     if (this.data.getIsLoadingStatusAvailable() &&
             !this.data.getIsLoaded()) {
         var barWidth = 300;
@@ -77,17 +74,21 @@ CustomGameLoop.prototype.draw = function(g) {
             (this.canvas.width - size.width) / 2, 
             (this.canvas.height + 20) / 2);
         
-
     }
+    var test = this.data.getLoadedString();
+    var dataSet = new DataSet("Ice Data"); 
+    dataSet.convertToArray(test);
+    var chart = new LineChart(this.canvas);
     
-    
+    chart.initializeChart(dataSet);
+    chart.draw();
+    this.moveSlider();
+    this.timer.draw(this.g);
    
-    //document.getElementById("data").innerHTML = test;
 }
 
 CustomGameLoop.prototype.moveSlider = function(){
-    var increment = this.timer.getScaleIncrement();
-    
+    var increment = this.timer.getScaleIncrement(); 
     if (parseInt(this.timer.label) >= 2015){
         //do nothing
         return null;
@@ -194,11 +195,3 @@ Pointer.prototype.deactivate = function() {
 }
 // </editor-fold>
 
-function initialize() {
-    var customGameLoop = new CustomGameLoop();
-    customGameLoop.initialize(document.getElementById("canvas"));
-    customGameLoop.setCanvasSize(640, 480);
-    
-}
-
-window.onload = initialize;
