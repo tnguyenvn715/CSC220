@@ -6,17 +6,14 @@ function CustomGameLoop() {
 CustomGameLoop.prototype = new GameLoop();
 
 CustomGameLoop.prototype.initialize = function(canvas) {
-    GameLoop.prototype.initialize.call(this, canvas);
-    
+    GameLoop.prototype.initialize.call(this, canvas);   
     this.inputManager = new InputManager();
-    this.g = this.canvas.getContext("2d");
-    this.input = new inputBox();
-    this.timer = new Timer(10, 20, this.g, 600, this.input.year, '2015' );
-    this.year = this.input.year;
-    this.data = new Resource("N_01_area.txt");
+    this.g = this.canvas.getContext("2d"); 
+    var input = new inputPrompter(1901, 2015);
+    this.inputYear = input.year;
+    this.timer = new Timer(30, 410, this.g, 805, '1901' , '2015');
+    this.data = new Resource("temperature_fig-2.csv");
     this.data.beginLoad(this, this.onDataLoaded);
-    
-    
 }
 CustomGameLoop.prototype.setCanvasSize = function(width, height) {
    this.canvas.width = width;
@@ -47,61 +44,16 @@ CustomGameLoop.prototype.onPointerLeave = function(id, position) {
 }
 
 
-
 CustomGameLoop.prototype.draw = function(g) {
-    
-    if (this.data.getIsLoadingStatusAvailable() &&
-            !this.data.getIsLoaded()) {
-        var barWidth = 300;
-        var barHeight = 50;
-        var progressWidth = this.data.getLoadedPercentage() / 100 * barWidth;
-        g.strokeStyle = "black";
-        g.fillStyle = "lightgreen";
-        g.beginPath();
-        g.rect((this.canvas.width - barWidth) / 2, 
-            (this.canvas.height - barHeight) / 2, 
-            progressWidth, barHeight);
-        g.fill();
-        g.beginPath();
-        g.rect((this.canvas.width - barWidth) / 2, 
-            (this.canvas.height - barHeight) / 2, 
-            barWidth, barHeight);
-        g.stroke();
-        g.fillStyle = "black";
-        g.font = "20px Arial";
-        var size = g.measureText(this.data.getLoadedPercentage().toString());
-        g.fillText(this.data.getLoadedPercentage() + "%", 
-            (this.canvas.width - size.width) / 2, 
-            (this.canvas.height + 20) / 2);
-        
-    }
-    var test = this.data.getLoadedString();
-    var dataSet = new DataSet("Ice Data"); 
-    dataSet.convertToArray(test);
-    var chart = new LineChart(this.canvas);
-    
+    var textContent = this.data.getLoadedString();
+    var dataSet = new DataSet("CurTempData", textContent, 0); 
+    var chart = new BarChart(this.canvas);
     chart.initializeChart(dataSet);
     chart.draw();
-    this.moveSlider();
+    this.timer.moveSlider();
     this.timer.draw(this.g);
-   
 }
 
-CustomGameLoop.prototype.moveSlider = function(){
-    var increment = this.timer.getScaleIncrement(); 
-    if (parseInt(this.timer.label) >= 2015){
-        //do nothing
-        return null;
-    }
-    else{
-        var nextYear = parseInt(this.timer.label) + 1;
-        var newx = this.timer.x + increment; 
-        this.timer.updatePosition(newx, this.timer.y);
-        this.timer.updateYearLabel(nextYear);
-        document.getElementById("demo").innerHTML = this.timer.label ;
-        
-    }  
-}
 // </editor-fold>
 
 // <editor-fold desc="InputManager">
@@ -145,11 +97,6 @@ InputManager.prototype.removePointer = function(id, position) {
     delete this.pointers[id];
 }
 
-InputManager.prototype.drawPointerDebugOverlay = function(g) {
-    for (var id in this.pointers) {
-        this.pointers[id].drawDebugOverlay(g);
-    }
-}
 // </editor-fold>
 
 // <editor-fold desc="Pointer">
@@ -172,20 +119,6 @@ Pointer.prototype.getIsActive = function() {
     return this.isActive;
 }
 
-Pointer.prototype.drawDebugOverlay = function(g) {
-    g.strokeStyle = "black";
-    g.fillStyle = "black";
-    g.font = "10px Arial"
-    g.lineWidth = this.getIsActive() ? 3 : 1;
-    g.globalAlpha = this.getIsActive() ? 1 : 0.5;
-    var position = this.getPosition();
-    g.beginPath();
-    g.rect(position.getX() - 20, position.getY() - 20, 40, 40);
-    g.stroke();
-    g.fillText(this.id, position.getX() - 20, position.getY() - 20 - 3);
-    g.globalAlpha = 1.0;
-}
-
 Pointer.prototype.activate = function() {
     this.isActive = true;
 }
@@ -193,5 +126,6 @@ Pointer.prototype.activate = function() {
 Pointer.prototype.deactivate = function() {
     this.isActive = false;
 }
+
 // </editor-fold>
 
