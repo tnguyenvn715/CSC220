@@ -1,6 +1,5 @@
 // <editor-fold desc="Point">
-function Point(x, y)
-{
+function Point(x, y) {
     this.setX(x);
     this.setY(y);
 }
@@ -248,7 +247,6 @@ GameLoop.prototype.draw = function(g) {
 
 GameLoop.prototype.initialize = function(canvas) {
     this.canvas = canvas;
-    //this.isInputDebugModeEnabled = false;
     this.initializeGraphics();
     this.initializeInput();
     this.initializeTimer();
