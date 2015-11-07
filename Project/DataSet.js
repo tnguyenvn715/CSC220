@@ -4,72 +4,63 @@
  * and open the template in the editor.
  */
 
-function DataSet(name){
+function DataSet(name, textFile, type) {
     this.name = name;
     this.data = [];
+    this.type = type;
+    this.textFile = textFile;
+    this.initializeData();
 }
-DataSet.prototype.convertToArray = function(allText){
-    var allTextLines = [];
-    var text = "";
-    allTextLines = allText.split(/\r\n|\n/);
-    for(var i = 0; i < allTextLines.length; i++){
-        //text  = text + allTextLines[i];
-        //document.getElementById("data").innerHTML = text;
-        console.log(allTextLines[i]);
-        if(i > 0) {
-            var year = allTextLines[i].split(" ")[0]; //get year
-            var value = allTextLines[i].split(" ")[3]; // get value
-            this.addDataPoint(year, value);
+DataSet.prototype.initializeData = function() {
+    this.readFileToArray(this.textFile, this.type);
+}
+DataSet.prototype.readFileToArray = function(file, type) {
+    // type = 0 : temperature anomaly to present
+    // type = 1 : future projection of temperature 
+    // type = 2 : ice data to present
+    // type = 3 : future projection of ice data
+    if (type == 0){
+        var lines = [];
+        lines = file.split(/\r\n|\n/);
+        for(var i = 0; i < lines.length; i++){
+            if(i > 6 ) {
+                var year = lines[i].split(",")[0]; //get year
+                var value = lines[i].split(",")[1]; // get value
+                this.addDataPoint(year, value);
+            }
         }
     }
 }
 
-DataSet.prototype.addDataPoint = function(label, value)
-{
+DataSet.prototype.addDataPoint = function(label, value) {
     this.data.push(new DataPoint(label, value));
 }
 
-DataSet.prototype.getName = function()
-{
+DataSet.prototype.getName = function() {
     return this.name;
 }
 
-
-DataSet.prototype.getData = function()
-{
+DataSet.prototype.getData = function() {
     return this.data;
 }
 
-DataSet.prototype.addDataPoint = function(label, value)
-{
+DataSet.prototype.addDataPoint = function(label, value) {
     this.data.push(new DataPoint(label, value));
 }
 
-DataSet.prototype.getName = function()
-{
+DataSet.prototype.getName = function() {
     return this.name;
 }
 
-function DataPoint(label, value)
-{
+function DataPoint(label, value) {
     this.label = label;
     this.value = value;
 }
 
-DataPoint.prototype.getLabel = function()
-{
+DataPoint.prototype.getLabel = function() {
     return this.label;
 }
 
-DataPoint.prototype.getValue = function()
-{
+DataPoint.prototype.getValue = function() {
     return this.value;
 }
-
-function initializeData()
-{
-    //
-}
-
-var data = [];
-initializeData();
