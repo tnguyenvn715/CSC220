@@ -1,3 +1,4 @@
+//CREDIT: code used below is provided by Professor Block
 function Resource(url) {
     this.url = url;
     this.method = "GET";
@@ -11,10 +12,6 @@ function Resource(url) {
     this.loadedBytes = null;
     this.loadedPercentage = 0;
 }
-
-//Resource.GlobalSettings = {
- //   useWebAuthentification
-//}
 
 Resource.prototype.beginLoad = function(
         objectToNotify, 
@@ -31,7 +28,7 @@ Resource.prototype.beginLoad = function(
         }
     }
     var _this = this;
-    var request = new XMLHttpRequest()
+    var request = new XMLHttpRequest();
     this.request = request;
     this.request.withCredentials = true;
 
