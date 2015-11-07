@@ -29,61 +29,73 @@ Timer.prototype.getEndYear = function(){
     return this.endYear;
 }
 
-Timer.prototype.getLabel = function(){
+Timer.prototype.getLabel = function() {
     return this.label;
 }
-
-Timer.prototype.updateYearLabel = function(newYear){
+Timer.prototype.updateYearLabel = function(newYear) {
     this.label = newYear;
 }
-Timer.prototype.setX = function(x){
+Timer.prototype.setX = function(x) {
     this.x = x;
 }
-Timer.prototype.setY = function(y){
+Timer.prototype.setY = function(y) {
     this.y = y;
 }
-Timer.prototype.setLength = function(length){
+Timer.prototype.setLength = function(length) {
     this.length = length;
 }
-Timer.prototype.getScaleIncrement = function(){
-    var increment = this.length/(parseInt(this.endYear)- parseInt(this.startYear));
+Timer.prototype.getScaleIncrement = function() {
+    var increment = this.length/(parseInt(this.endYear)
+                        - parseInt(this.startYear));
     return increment;
 }
-Timer.prototype.updatePosition = function(x, y){
+Timer.prototype.updatePosition = function(x, y) {
     this.x = x;
     this.y = y;
 }
-Timer.prototype.drawScale = function(g, x, y, length, height, radius, fill, stroke){
+Timer.prototype.moveSlider = function() {
+    var increment = this.getScaleIncrement();
+    
+    if (parseInt(this.label) >= 2015) {
+        return null;
+    }
+    else {
+        var nextYear = parseInt(this.label) + 1;
+        var newx = this.x + increment; 
+        this.updatePosition(newx, this.y);
+        this.updateYearLabel(nextYear);
+        document.getElementById("year").innerHTML = this.label ;
+    }  
+}
+Timer.prototype.drawScale = 
+        function(g, x, y, length, height, radius, fill, stroke) {
     if (typeof stroke == "undefined" ) {
         stroke = true;
     }
     if (typeof radius === "undefined") {
         radius = 5;
     }
-  
     g.beginPath();
     g.rect(x, y,length, height);
     g.closePath();
-    g.fillStyle = 'gray';
-   
-    g.lineWidth = 2;
+    g.fillStyle = 'gray'; 
+    g.lineWidth = 1;
     g.strokeStyle = 'black';
-
     if (stroke) {
         g.stroke();
-     }
+    }
     if (fill) {
         g.fill();
     }        
 }
 
-Timer.prototype.drawLabel = function(g){
+Timer.prototype.drawLabel = function(g) {
     g.fillStyle = 'black';
     g.font = '12pt Times'; 
     g.fillText(this.label, this.x - 20 ,this.y + 25);
 }
-Timer.prototype.draw = function(g){
-    this.drawScale(g, 10, this.y , this.length, 5, 10, true);
+Timer.prototype.draw = function(g) {
+    this.drawScale(g, 30, this.y , this.length, 5, 10, true);
     this.drawLabel(g);
     g.beginPath();
     g.arc(this.x, this.y, 10, 0, 2 * Math.PI, false);
