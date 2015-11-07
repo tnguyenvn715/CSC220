@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 function BarChart(canvas){
     Chart.call(this, canvas);
+    this.drawYAxis(30, 0, 400, 50);
+    
 }
 BarChart.prototype = new Chart();
 
@@ -24,6 +24,6 @@ BarElement.prototype = new ChartElement();
 BarElement.prototype.drawElement = function(g, index){
     // credit: Professor Block
     ChartElement.prototype.drawElement.call(this,g, index);
-    g.fillStyle = this.isHover ? this.highlightColor: this.normalColor; 
+    g.fillStyle = "red"; 
     g.fillRect(this.x,this.y, this.width, this.height );
 }
