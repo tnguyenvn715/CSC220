@@ -45,13 +45,19 @@ CustomGameLoop.prototype.onPointerLeave = function(id, position) {
 
 
 CustomGameLoop.prototype.draw = function(g) {
+    
     var textContent = this.data.getLoadedString();
     var dataSet = new DataSet("CurTempData", textContent, 0); 
     var chart = new BarChart(this.canvas);
     chart.initializeChart(dataSet);
-    chart.draw();
+    //chart.draw();
     this.timer.moveSlider();
+    var year = this.timer.getLabel();
+    //dataSet.retrieveIndex(year);
+    chart.draw(5);
+    //console.log(year);
     this.timer.draw(this.g);
+   
 }
 
 // </editor-fold>
