@@ -24,10 +24,22 @@ DataSet.prototype.readFileToArray = function(file, type) {
         lines = file.split(/\r\n|\n/);
         for(var i = 0; i < lines.length; i++){
             if(i > 6 ) {
+                
                 var year = lines[i].split(",")[0]; //get year
                 var value = lines[i].split(",")[1]; // get value
+                //console.log(typeof(year));
                 this.addDataPoint(year, value);
             }
+        }
+    }
+}
+
+DataSet.prototype.retrieveIndex = function(label){
+    
+    for (var i = 0; i < this.data.length; i ++){
+        console.log(parseInt(this.data[i].getLabel()));
+        if (parseInt(this.data[i].getLabel()) === toString(label)){
+            return i;
         }
     }
 }
