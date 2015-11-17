@@ -25,8 +25,8 @@ Chart.prototype.initializeChart = function(dataSeries) {
         this.elements.push(element);            
     }
 }
-Chart.prototype.draw = function() {
-    for (var i = 0; i < this.elements.length; i++) {
+Chart.prototype.draw = function(endIndex) {
+    for (var i = 0; i < endIndex; i++) {
         this.elements[i].drawElement(this.g, i+1);
     }
 }
