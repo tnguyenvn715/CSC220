@@ -227,7 +227,7 @@ GameLoop.prototype.initializeTimer = function() {
 }
 
 GameLoop.prototype.onTimerTick = function() {
-    this.update(10);
+    this.update();
     this.clear(this.g);
     this.draw(this.g);
 }
@@ -237,8 +237,8 @@ GameLoop.prototype.clear = function(g) {
     g.fillRect(0, 0, this.canvas.width, this.canvas.height);
 }
 
-GameLoop.prototype.update = function(elapsedMilliseconds) {
-    // override
+GameLoop.prototype.update = function() {
+    
 }
 
 GameLoop.prototype.draw = function(g) {
