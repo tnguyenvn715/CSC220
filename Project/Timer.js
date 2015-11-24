@@ -44,6 +44,9 @@ Timer.prototype.setY = function(y) {
 Timer.prototype.setLength = function(length) {
     this.length = length;
 }
+Timer.prototype.getLength = function() {
+    return this.length;
+}
 Timer.prototype.getScaleIncrement = function() {
     var increment = this.length/(parseInt(this.endYear)
                         - parseInt(this.startYear));
@@ -56,16 +59,21 @@ Timer.prototype.updatePosition = function(x, y) {
 Timer.prototype.moveSlider = function() {
     var increment = this.getScaleIncrement();
     
-    if (parseInt(this.label) >= 2015) {
-        return null;
-    }
-    else {
+    if (parseInt(this.label) < this.endYear) {
+        
         var nextYear = parseInt(this.label) + 1;
         var newx = this.x + increment; 
         this.updatePosition(newx, this.y);
         this.updateYearLabel(nextYear);
         document.getElementById("year").innerHTML = this.label ;
     }  
+    else{
+        this.label = this.startYear;
+        this.updatePosition(30, this.y);
+        this.updateYearLabel(this.startYear);
+        document.getElementById("year").innerHTML = this.label ;
+   
+    }
 }
 Timer.prototype.drawScale = 
         function(g, x, y, length, height, radius, fill, stroke) {
@@ -106,4 +114,3 @@ Timer.prototype.draw = function(g) {
     g.stroke();
     
 }
-
