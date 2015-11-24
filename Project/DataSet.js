@@ -4,17 +4,17 @@
  * and open the template in the editor.
  */
 
-function DataSet(name, textFile, type) {
+function DataSet(name, textFile, type, year) {
     this.name = name;
     this.data = [];
     this.type = type;
     this.textFile = textFile;
-    this.initializeData();
+    this.initializeData(year);
 }
-DataSet.prototype.initializeData = function() {
-    this.readFileToArray(this.textFile, this.type);
+DataSet.prototype.initializeData = function(startYear) {
+    this.readFileToArray(this.textFile, this.type, startYear);
 }
-DataSet.prototype.readFileToArray = function(file, type) {
+DataSet.prototype.readFileToArray = function(file, type, startYear) {
     // type = 0 : temperature anomaly to present
     // type = 1 : future projection of temperature 
     // type = 2 : ice data to present
@@ -26,6 +26,9 @@ DataSet.prototype.readFileToArray = function(file, type) {
             if(i > 6 ) {
                 
                 var year = lines[i].split(",")[0]; //get year
+                if (parseInt(year) < parseInt(startYear)){
+                    continue;
+                }
                 var value = lines[i].split(",")[1]; // get value
                 //console.log(typeof(year));
                 this.addDataPoint(year, value);
