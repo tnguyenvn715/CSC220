@@ -1,3 +1,5 @@
+
+
 function initialize() {
     var customGameLoop = new CustomGameLoop();
     var canvas =document.getElementById("canvas"); 
