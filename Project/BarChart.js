@@ -5,7 +5,6 @@
  */
 function BarChart(canvas){
     Chart.call(this, canvas);
-    this.drawYAxis(30, 0, 400, 50);
     
 }
 BarChart.prototype = new Chart();
@@ -21,9 +20,9 @@ function BarElement(label, value, x, y, width, height){
 }
 BarElement.prototype = new ChartElement();
 
-BarElement.prototype.drawElement = function(g, index){
+BarElement.prototype.drawElement = function(g){
     // credit: Professor Block
-    ChartElement.prototype.drawElement.call(this,g, index);
+    ChartElement.prototype.drawElement.call(this,g);
     g.fillStyle = "red"; 
     g.fillRect(this.x,this.y, this.width, this.height );
 }
