@@ -25,9 +25,11 @@ Chart.prototype.initializeChart = function(dataSeries) {
         this.elements.push(element);            
     }
 }
-Chart.prototype.draw = function(endIndex) {
-    for (var i = 0; i < endIndex; i++) {
-        this.elements[i].drawElement(this.g, i+1);
+Chart.prototype.draw = function(g) {
+    this.drawYAxis(30, 0, 400, 50);
+    this.drawXAxis(200, 30, 835);
+    for (var i = 0; i < this.elements.length; i++) {
+        this.elements[i].drawElement(g);
     }
 }
 
