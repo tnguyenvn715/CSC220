@@ -10,9 +10,10 @@ CustomGameLoop.prototype.initialize = function(canvas) {
     this.inputManager = new InputManager();
     
     this.g = this.canvas.getContext("2d"); 
-    var input = new inputPrompter(1901, 2015);
-    this.inputYear = input.year;
-    this.timer = new Timer(30, 410, this.g, 805, this.inputYear , '2014');
+    var input = new inputPrompter(1901, 2014);
+    this.inputYear = parseInt(input.year);
+    var timerPos = new Point(30, 410);
+    this.timer = new Timer(this.g, timerPos,  805, this.inputYear , 2014);
     this.data = new Resource("temperature_fig-2.csv");
     this.data.beginLoad(this, this.onDataLoaded);
     this.chart = new BarChart(this.canvas);
@@ -48,37 +49,27 @@ CustomGameLoop.prototype.onPointerLeave = function(id, position) {
     this.inputManager.onPointerLeave(id, position);
 }
 
-var currentIndex = 0
+var currentIndex = 0;
 CustomGameLoop.prototype.draw = function(g) {
     GameLoop.prototype.draw.call(this, g);
     this.timer.draw(g);
+    this.timer.moveSlider();
     this.chart.draw(g); 
 }
 
  
 CustomGameLoop.prototype.update = function() {
     GameLoop.prototype.update.call();
-    if (currentIndex >= (2014 - this.inputYear)){
-        
+    if (currentIndex >= (2014 - this.inputYear)){  
         GameLoop.prototype.clear.call(this, this.g);
         currentIndex = 0;
     }
     else{
-        this.timer.moveSlider();
-        
         var textContent = this.data.getLoadedString();
         var dataSet = new DataSet("CurTempData", textContent, 0, this.inputYear);
-        
-        var value = dataSet.getData()[currentIndex].getValue();
-        var label = dataSet.getData()[currentIndex].getLabel();
-        var height = value * 50;
-        var ypos = 200- height;
-        var width = (this.timer.getLength()/ (2014 - this.inputYear)) - (this.timer.getLength()/ (2014 - this.inputYear))/2;
-        var xpos = this.timer.getX();
-        var element = this.chart.initializeChartElement
-                    (label, value, xpos, ypos, width, height);
-        this.chart.elements.push(element);
+        this.chart.addElement(dataSet, currentIndex, this.timer);
         currentIndex += 1;
+        
     }
 }
 // </editor-fold>

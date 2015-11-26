@@ -3,22 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-function Timer(x, y, g, length, startYear, endYear){
-    this.x = x;
-    this.y = y;
+function Timer(g, position, length, startYear, endYear){
     this.g = g;
+    this.position = position;
     this.length= length;
     this.label = startYear;
     this.startYear = startYear;
     this.endYear = endYear;
-}
-
-Timer.prototype.getX = function(){
-    return this.x;
-}
-
-Timer.prototype.getY = function(){
-    return this.y;
 }
 
 Timer.prototype.getStartYear = function(){
@@ -32,14 +23,16 @@ Timer.prototype.getEndYear = function(){
 Timer.prototype.getLabel = function() {
     return this.label;
 }
-Timer.prototype.updateYearLabel = function(newYear) {
+Timer.prototype.setLabel = function(newYear) {
     this.label = newYear;
 }
-Timer.prototype.setX = function(x) {
-    this.x = x;
+Timer.prototype.setPosition = function(position) {
+    this.position.x = position.getX();
+    this.position.y = position.getY();
 }
-Timer.prototype.setY = function(y) {
-    this.y = y;
+
+Timer.prototype.getPosition = function() {
+    return this.position.clone();
 }
 Timer.prototype.setLength = function(length) {
     this.length = length;
@@ -52,39 +45,36 @@ Timer.prototype.getScaleIncrement = function() {
                         - parseInt(this.startYear));
     return increment;
 }
-Timer.prototype.updatePosition = function(x, y) {
-    this.x = x;
-    this.y = y;
-}
-Timer.prototype.moveSlider = function() {
+
+Timer.prototype.moveSlider = function(g) {
     var increment = this.getScaleIncrement();
     
-    if (parseInt(this.label) < this.endYear) {
+    if (this.label < this.endYear) {
         
-        var nextYear = parseInt(this.label) + 1;
-        var newx = this.x + increment; 
-        this.updatePosition(newx, this.y);
-        this.updateYearLabel(nextYear);
-        document.getElementById("year").innerHTML = this.label ;
+        var nextYear = this.label + 1;
+        var newx = this.position.getX() + increment;
+        var newPosition = new Point(newx, this.position.getY());
+        this.setPosition(newPosition);
+        this.setLabel(nextYear);
+        
     }  
     else{
         this.label = this.startYear;
-        this.updatePosition(30, this.y);
-        this.updateYearLabel(this.startYear);
-        document.getElementById("year").innerHTML = this.label ;
+        var newPosition = new Point(30, this.position.getY() );
+        this.setPosition(newPosition);
+        this.setLabel(this.startYear);
+
    
     }
 }
-Timer.prototype.drawScale = 
-        function(g, x, y, length, height, radius, fill, stroke) {
+Timer.prototype.drawTimerBar = 
+        function(g, position, length, height, fill, stroke) {
     if (typeof stroke == "undefined" ) {
         stroke = true;
     }
-    if (typeof radius === "undefined") {
-        radius = 5;
-    }
+    
     g.beginPath();
-    g.rect(x, y,length, height);
+    g.rect(position.getX(), position.getY(),length, height);
     g.closePath();
     g.fillStyle = 'gray'; 
     g.lineWidth = 1;
@@ -100,17 +90,25 @@ Timer.prototype.drawScale =
 Timer.prototype.drawLabel = function(g) {
     g.fillStyle = 'black';
     g.font = '12pt Times'; 
-    g.fillText(this.label, this.x - 20 ,this.y + 25);
+    g.fillText(this.label, this.position.getX() - 20 , this.position.getY() + 25);
 }
 Timer.prototype.draw = function(g) {
-    this.drawScale(g, 30, this.y , this.length, 5, 10, true);
+    var timerBarPosition = new Point(30, this.position.getY());
+    this.drawTimerBar(g, timerBarPosition, this.length, 5, false);
     this.drawLabel(g);
+    this.drawSlider(g, 'white', 'black');
+    this.updateHTMLLabel(this.label);
+}
+
+Timer.prototype.drawSlider = function(g, fillColor, strokeColor){
     g.beginPath();
     g.arc(this.x, this.y, 10, 0, 2 * Math.PI, false);
-    g.fillStyle = 'red';
+    g.fillStyle = fillColor;
     g.fill();
     g.lineWidth = 1;
-    g.strokeStyle = 'black';
+    g.strokeStyle = strokeColor;
     g.stroke();
-    
+}
+Timer.prototype.updateHTMLLabel = function(label){
+    document.getElementById("year").innerHTML = label ;
 }

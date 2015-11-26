@@ -37,15 +37,6 @@ DataSet.prototype.readFileToArray = function(file, type, startYear) {
     }
 }
 
-DataSet.prototype.retrieveIndex = function(label){
-    
-    for (var i = 0; i < this.data.length; i ++){
-        console.log(parseInt(this.data[i].getLabel()));
-        if (parseInt(this.data[i].getLabel()) === toString(label)){
-            return i;
-        }
-    }
-}
 
 DataSet.prototype.addDataPoint = function(label, value) {
     this.data.push(new DataPoint(label, value));
