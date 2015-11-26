@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-function Timer(g, position, length, startYear, endYear){
+function Timer(g, position, length, startYear, endYear) {
     this.g = g;
     this.position = position;
     this.length= length;
@@ -11,43 +11,39 @@ function Timer(g, position, length, startYear, endYear){
     this.startYear = startYear;
     this.endYear = endYear;
 }
-
-Timer.prototype.getStartYear = function(){
+Timer.prototype.getStartYear = function() {
     return this.startYear;
 }
-
-Timer.prototype.getEndYear = function(){
+Timer.prototype.getEndYear = function() {
     return this.endYear;
 }
-
 Timer.prototype.getLabel = function() {
     return this.label;
 }
 Timer.prototype.setLabel = function(newYear) {
     this.label = newYear;
 }
+Timer.prototype.getPosition = function() {
+    return this.position.clone();
+}
 Timer.prototype.setPosition = function(position) {
     this.position.x = position.getX();
     this.position.y = position.getY();
 }
-
-Timer.prototype.getPosition = function() {
-    return this.position.clone();
-}
-Timer.prototype.setLength = function(length) {
-    this.length = length;
-}
-Timer.prototype.getLength = function() {
+Timer.prototype.getPixelLength = function() {
     return this.length;
 }
-Timer.prototype.getScaleIncrement = function() {
+Timer.prototype.setPixelLength = function(length) {
+    this.length = length;
+}
+Timer.prototype.getHorizontalncrement = function() {
     var increment = this.length/(parseInt(this.endYear)
                         - parseInt(this.startYear));
     return increment;
 }
 
 Timer.prototype.moveSlider = function(g) {
-    var increment = this.getScaleIncrement();
+    var increment = this.getHorizontalncrement();
     
     if (this.label < this.endYear) {
         
@@ -72,7 +68,7 @@ Timer.prototype.drawTimerBar =
     if (typeof stroke == "undefined" ) {
         stroke = true;
     }
-    
+    g.save();
     g.beginPath();
     g.rect(position.getX(), position.getY(),length, height);
     g.closePath();
@@ -84,30 +80,37 @@ Timer.prototype.drawTimerBar =
     }
     if (fill) {
         g.fill();
-    }        
+    }       
+    g.restore();
 }
 
 Timer.prototype.drawLabel = function(g) {
+    g.save();
     g.fillStyle = 'black';
     g.font = '12pt Times'; 
-    g.fillText(this.label, this.position.getX() - 20 , this.position.getY() + 25);
+    var xpos = this.position.getX() - 20;
+    var ypos = this.position.getY() + 25;
+    g.fillText(this.label, xpos , ypos);
+    g.restore();
 }
 Timer.prototype.draw = function(g) {
     var timerBarPosition = new Point(30, this.position.getY());
-    this.drawTimerBar(g, timerBarPosition, this.length, 5, false);
+    this.drawTimerBar(g, timerBarPosition, this.length, 5, true);
     this.drawLabel(g);
-    this.drawSlider(g, 'white', 'black');
+    this.drawSlider(g, 'black', 'black');
     this.updateHTMLLabel(this.label);
 }
 
 Timer.prototype.drawSlider = function(g, fillColor, strokeColor){
+    g.save();
     g.beginPath();
-    g.arc(this.x, this.y, 10, 0, 2 * Math.PI, false);
+    g.arc(this.position.getX(), this.position.getY(), 10, 0, 2 * Math.PI, false);
     g.fillStyle = fillColor;
     g.fill();
     g.lineWidth = 1;
     g.strokeStyle = strokeColor;
     g.stroke();
+    g.restore;
 }
 Timer.prototype.updateHTMLLabel = function(label){
     document.getElementById("year").innerHTML = label ;

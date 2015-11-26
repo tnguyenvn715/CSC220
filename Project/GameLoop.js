@@ -47,85 +47,19 @@ GameLoop.prototype.initializeGraphics = function() {
     this.canvas.width = 900;
     this.canvas.height = 900;
 }
-
 GameLoop.prototype.initializeInput = function() {
-    this.canvas.associatedGameLoop = this;
-    this.canvas.onmouseenter = function(e) {
-        e.preventDefault();
-        var localCoordinate = 
-                this.associatedGameLoop.getLocalCanvasCoordinates(e);
-        this.associatedGameLoop.onMouseEnter(localCoordinate);
-    }
+    this.canvas.associatedGameEngine = this;
     this.canvas.onmousemove = function(e) {
-        e.preventDefault();
         var localCoordinate = 
-                this.associatedGameLoop.getLocalCanvasCoordinates(e);
-        this.associatedGameLoop.onMouseMove(localCoordinate);
+                this.associatedGameEngine.getLocalCanvasCoordinates(e);
+        this.associatedGameEngine.onMouseMove(localCoordinate);
     }
-    this.canvas.onmousedown = function(e) {
-        e.preventDefault();
+    this.canvas.onclick = function(e) {
         var localCoordinate = 
-                this.associatedGameLoop.getLocalCanvasCoordinates(e);
-        this.associatedGameLoop.onMouseDown(localCoordinate);
-    }
-    this.canvas.onmouseup = function(e) {
-        e.preventDefault();
-        var localCoordinate = 
-                this.associatedGameLoop.getLocalCanvasCoordinates(e);
-        this.associatedGameLoop.onMouseUp(localCoordinate);
-    }
-    this.canvas.onmouseleave = function(e) {
-        e.preventDefault();
-        var localCoordinate = 
-                this.associatedGameLoop.getLocalCanvasCoordinates(e);
-        this.associatedGameLoop.onMouseLeave(localCoordinate);
-    }
-    this.canvas.ontouchstart = function(e) {
-        e.preventDefault();
-        for (var i = 0; i < e.changedTouches.length; i++) 
-        {
-           var t = e.changedTouches[i];
-           var localCoordinate = 
-                   this.associatedGameLoop
-                   .getLocalCanvasCoordinates(t.clientX, t.clientY);
-           this.associatedGameLoop.onTouchStart(t.identifier, localCoordinate);
-        }
-    }
-    this.canvas.ontouchmove = function(e) {
-        e.preventDefault();
-        for (var i = 0; i < e.changedTouches.length; i++) 
-        {
-           var t = e.changedTouches[i];
-           var localCoordinate = 
-                   this.associatedGameLoop
-                   .getLocalCanvasCoordinates(t.clientX, t.clientY);
-           this.associatedGameLoop.onTouchMove(t.identifier, localCoordinate);
-        }
-    }
-    this.canvas.ontouchend = function(e) {
-        e.preventDefault();
-        for (var i = 0; i < e.changedTouches.length; i++) 
-        {
-           var t = e.changedTouches[i];
-           var localCoordinate = 
-                   this.associatedGameLoop
-                   .getLocalCanvasCoordinates(t.clientX, t.clientY);
-           this.associatedGameLoop.onTouchEnd(t.identifier, localCoordinate);
-        }
-    }
-    this.canvas.ontouchcancel = function(e) {
-        e.preventDefault();
-        for (var i = 0; i < e.changedTouches.length; i++) 
-        {
-           var t = e.changedTouches[i];
-           var localCoordinate = 
-                   this.associatedGameLoop
-                   .getLocalCanvasCoordinates(t.clientX, t.clientY);
-           this.associatedGameLoop.onTouchEnd(t.identifier, localCoordinate);
-        }
+                this.associatedGameEngine.getLocalCanvasCoordinates(e);
+        this.associatedGameEngine.onMouseClick(localCoordinate);
     }
 }
-
 GameLoop.prototype.getLocalCanvasCoordinates = function(arg1, arg2) {
     var clientX = 0;
     var clientY = 0;

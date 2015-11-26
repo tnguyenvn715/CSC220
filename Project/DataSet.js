@@ -37,25 +37,20 @@ DataSet.prototype.readFileToArray = function(file, type, startYear) {
     }
 }
 
-
-DataSet.prototype.addDataPoint = function(label, value) {
-    this.data.push(new DataPoint(label, value));
-}
-
-DataSet.prototype.getName = function() {
-    return this.name;
-}
-
 DataSet.prototype.getData = function() {
     return this.data;
 }
-
-DataSet.prototype.addDataPoint = function(label, value) {
-    this.data.push(new DataPoint(label, value));
+DataSet.prototype.setData = function(data) {
+    this.data = data;
 }
-
 DataSet.prototype.getName = function() {
     return this.name;
+}
+DataSet.prototype.setName = function(name) {
+    this.name = name;
+}
+DataSet.prototype.addDataPoint = function(label, value) {
+    this.data.push(new DataPoint(label, value));
 }
 
 function DataPoint(label, value) {
