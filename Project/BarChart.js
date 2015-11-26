@@ -14,15 +14,17 @@ BarChart.prototype.initializeChartElement = function(label, value, x, y, width, 
     return new BarElement(label, value, x, y, width, height);
 }
 
+
+
 function BarElement(label, value, x, y, width, height){
     ChartElement.call(this,label, value, x, y, width, height );
     
 }
 BarElement.prototype = new ChartElement();
-
 BarElement.prototype.drawElement = function(g){
     // credit: Professor Block
     ChartElement.prototype.drawElement.call(this,g);
-    g.fillStyle = "red"; 
+    g.fillStyle = this.isHover ? this.highlightColor: this.normalColor; 
     g.fillRect(this.x,this.y, this.width, this.height );
 }
+
