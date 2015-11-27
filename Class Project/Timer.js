@@ -3,8 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-function Timer(g, position, length, startYear, endYear) {
-    this.g = g;
+function Timer(position, length, startYear, endYear) {
     this.position = position;
     this.length= length;
     this.label = startYear;
@@ -44,23 +43,18 @@ Timer.prototype.getHorizontalncrement = function() {
 
 Timer.prototype.moveSlider = function(g) {
     var increment = this.getHorizontalncrement();
-    
-    if (this.label < this.endYear) {
-        
+    if (this.label < this.endYear) {  
         var nextYear = this.label + 1;
         var newx = this.position.getX() + increment;
         var newPosition = new Point(newx, this.position.getY());
         this.setPosition(newPosition);
-        this.setLabel(nextYear);
-        
+        this.setLabel(nextYear);   
     }  
     else{
         this.label = this.startYear;
         var newPosition = new Point(30, this.position.getY() );
         this.setPosition(newPosition);
         this.setLabel(this.startYear);
-
-   
     }
 }
 Timer.prototype.drawTimerBar = 
@@ -68,10 +62,8 @@ Timer.prototype.drawTimerBar =
     if (typeof stroke == "undefined" ) {
         stroke = true;
     }
-    g.save();
     g.beginPath();
     g.rect(position.getX(), position.getY(),length, height);
-    g.closePath();
     g.fillStyle = 'gray'; 
     g.lineWidth = 1;
     g.strokeStyle = 'black';
@@ -80,29 +72,30 @@ Timer.prototype.drawTimerBar =
     }
     if (fill) {
         g.fill();
-    }       
-    g.restore();
+    }      
+    g.closePath();
 }
 
 Timer.prototype.drawLabel = function(g) {
-    g.save();
+    g.beginPath();
     g.fillStyle = 'black';
     g.font = '12pt Times'; 
     var xpos = this.position.getX() - 20;
     var ypos = this.position.getY() + 25;
     g.fillText(this.label, xpos , ypos);
-    g.restore();
+    g.closePath();
 }
 Timer.prototype.draw = function(g) {
+    g.save();
     var timerBarPosition = new Point(30, this.position.getY());
     this.drawTimerBar(g, timerBarPosition, this.length, 5, true);
     this.drawLabel(g);
     this.drawSlider(g, 'black', 'black');
     this.updateHTMLLabel(this.label);
+    g.restore();
 }
 
 Timer.prototype.drawSlider = function(g, fillColor, strokeColor){
-    g.save();
     g.beginPath();
     g.arc(this.position.getX(), this.position.getY(), 10, 0, 2 * Math.PI, false);
     g.fillStyle = fillColor;
@@ -110,7 +103,7 @@ Timer.prototype.drawSlider = function(g, fillColor, strokeColor){
     g.lineWidth = 1;
     g.strokeStyle = strokeColor;
     g.stroke();
-    g.restore;
+    g.closePath();
 }
 Timer.prototype.updateHTMLLabel = function(label){
     document.getElementById("year").innerHTML = label ;
