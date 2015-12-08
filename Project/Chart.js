@@ -36,11 +36,14 @@ Chart.prototype.onMouseMove = function(e){
 }
     
 Chart.prototype.draw = function(g) {
-    this.drawYAxis(g, 50, 0, 400, 50);
-    this.drawXAxis(g, 200, 50, 835);
+    this.drawYAxis(g, 70, 0, 400, 50);
+    this.drawXAxis(g, 200, 70, 835);
     for (var i = 0; i < this.elements.length; i++) {
         this.elements[i].drawElement(g);
     }
+}
+Chart.prototype.clearElements = function() {
+    this.elements = [];
 }
 Chart.prototype.addElement = function(dataPoint, timer) {
     var value = dataPoint.getValue();
@@ -69,6 +72,10 @@ Chart.prototype.drawYAxis = function(g, xpos, ymin, ymax, yincrement) {
             g.closePath(); 
         }   
     }
+}
+Chart.prototype.clearChart = function(g){
+    this.elements = [];
+    this.draw(g);
 }
 Chart.prototype.drawXAxis = function(g, ypos, xmin, xmax) {
     g.beginPath();

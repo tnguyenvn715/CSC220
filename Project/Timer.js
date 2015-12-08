@@ -111,10 +111,13 @@ Timer.prototype.play = function(mousePos){
     }
     return this.isPlayed;
 }
-
+Timer.prototype.resetSlider = function(){
+    this.setPosition(this.initialPosition);
+    this.setLabel(this.startYear);
+}
 Timer.prototype.drawPlayButton = function(g, radius, fillColor, strokeColor){
     g.beginPath();
-    var x = this.initialPosition.getX() - radius;
+    var x = this.initialPosition.getX() - 2 * radius;
     var y = this.initialPosition.getY();
     //Draw background circle
     g.arc(x, y, radius, 0, 2 * Math.PI, false);

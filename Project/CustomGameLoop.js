@@ -14,12 +14,11 @@ CustomGameLoop.prototype.initialize = function(canvas) {
     this.charts.push(new BarChart(this.canvas));
     var input = new inputPrompter(1901, 2014);
     var startyear = input.getInputYear();
-    var initialPos = new Point(50, 410);
-    this.timer = new Timer(new Point(50, 410), 805, 5, startyear , 2014); //INTERESTING, WHEN YOU USE INITITAL POS IT MOVES ALONG
+    var initialPos = new Point(70, 410);
+    this.timer = new Timer(new Point(70, 410), 805, 5, startyear , 2014); //INTERESTING, WHEN YOU USE INITITAL POS IT MOVES ALONG
     this.timer.setInitialPosition(initialPos);
     this.data = new Resource("temperature_fig-2.csv");
-    this.data.beginLoad(this, this.onDataLoaded);
-    
+    this.data.beginLoad(this, this.onDataLoaded);   
 }
 
 CustomGameLoop.prototype.onDataLoaded = function(resource) {
@@ -54,7 +53,6 @@ CustomGameLoop.prototype.onPointerLeave = function(id, position) {
     this.inputManager.onPointerLeave(id, position);
 }
 
-//var currentIndex = 0;
 CustomGameLoop.prototype.draw = function(g) {
     GameLoop.prototype.draw.call(this, g);
     this.charts[0].draw(g); 
@@ -64,25 +62,24 @@ CustomGameLoop.prototype.draw = function(g) {
 
 CustomGameLoop.prototype.clear = function(g, canvas) {
     GameLoop.prototype.clear.call(this, g);
-    g.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-    
+    g.clearRect(0, 0, this.canvas.width, this.canvas.height);    
 }
 
 CustomGameLoop.prototype.update = function() {
     GameLoop.prototype.update.call();
-    if (parseInt(this.timer.getLabel()) >= 2014){  
-        this.clear(this.g, this.canvas);
+    if (parseInt(this.timer.getLabel()) >= 2014){
+        this.charts[0].clearChart(this.g);
+        this.timer.resetSlider();
     }
     else{
+        
         var dataText = this.data.getLoadedString();
         var currentData = new DataSet("CurTempData", dataText, 0, 
                             this.timer.getStartYear());        
         this.timer.moveSlider();   
         var currentyear = this.timer.getLabel();
         var point = currentData.getDataPointFromYear(currentyear);
-        this.charts[0].addElement(point, this.timer);
-        
+        this.charts[0].addElement(point, this.timer);   
     }
 }
 // </editor-fold>
