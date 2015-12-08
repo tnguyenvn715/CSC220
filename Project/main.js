@@ -2,8 +2,9 @@
 
 function initialize() {
     var customGameLoop = new CustomGameLoop();
-    var canvas =document.getElementById("canvas"); 
-    customGameLoop.initialize(canvas);
-}
+    
+    customGameLoop.initialize(document.getElementById("canvas"));
 
+    
+}
 window.onload= initialize;

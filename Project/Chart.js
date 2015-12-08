@@ -36,49 +36,46 @@ Chart.prototype.onMouseMove = function(e){
 }
     
 Chart.prototype.draw = function(g) {
-    this.drawYAxis(g, 30, 0, 400, 50);
-    this.drawXAxis(g, 200, 30, 835);
+    this.drawYAxis(g, 50, 0, 400, 50);
+    this.drawXAxis(g, 200, 50, 835);
     for (var i = 0; i < this.elements.length; i++) {
         this.elements[i].drawElement(g);
     }
 }
-Chart.prototype.addElement = function(dataSet, currentIndex, timer) {
-    var value = dataSet.getData()[currentIndex].getValue();
-    var label = dataSet.getData()[currentIndex].getLabel();
+Chart.prototype.addElement = function(dataPoint, timer) {
+    var value = dataPoint.getValue();
+    var label = dataPoint.getLabel();
     var height = value * 50;
-    var ypos = 200- height;
+    var ypos = 200 - height;
     var yearSpan = timer.getEndYear() - timer.getStartYear();
     var width = 5;
     var xpos = timer.getPosition().getX();
     var element = this.initializeChartElement
                     (label, value, xpos, ypos, width, height);
-    this.elements.push(element);
-    
+    this.elements.push(element); 
 }
 Chart.prototype.drawYAxis = function(g, xpos, ymin, ymax, yincrement) {
-    g.save();
     g.beginPath();
     g.moveTo(xpos,ymin);
     g.lineTo(xpos,ymax);
     g.stroke();
-
+    g.closePath(); 
     for(var i = ymax; i >= ymin; i --) {
         if (i%yincrement === 0){     
             g.beginPath();
-            g.moveTo(25,i);
-            g.lineTo(30,i);
+            g.moveTo(xpos - 5,i);
+            g.lineTo(xpos,i);
             g.stroke();
+            g.closePath(); 
         }   
     }
-    g.restore();
 }
 Chart.prototype.drawXAxis = function(g, ypos, xmin, xmax) {
-    g.save();
     g.beginPath();
     g.moveTo(xmin,ypos);
     g.lineTo(xmax,ypos);
     g.stroke();
-    g.restore();
+    g.closePath(); 
 }
 //ChartElement Constructor
 function ChartElement(label, value, x, y, width, height) {
@@ -94,11 +91,11 @@ function ChartElement(label, value, x, y, width, height) {
 }
 
 ChartElement.prototype.drawElement = function(g) {
-    g.save();
+    g.beginPath();
     g.fillStyle =  this.isHover ? "black": "white"; 
     g.font = "13px Calibri";
     g.fillText(this.label + ': ' + this.value, this.x, 100);
-    g.restore();
+    g.closePath();
 }
 ChartElement.prototype.isHit = function(mousePos) {
     if((mousePos.x > this.x  && mousePos.x < (this.x+ this.width)) 

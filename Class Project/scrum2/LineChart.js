@@ -48,3 +48,6 @@ LineElement.prototype.drawElement = function(g) {
     g.closePath();
     g.restore();
 }
+
+
+

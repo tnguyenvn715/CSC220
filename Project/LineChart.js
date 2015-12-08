@@ -14,11 +14,8 @@ LineChart.prototype.initializeChartElement =
     //credit: Professor Block
     return new LineElement(label, value, x, y, width, height);
 }
-LineChart.prototype.draw = function(g, fillColor) {
-    Chart.prototype.draw.call(this, g, fillColor);
-    //g.strokeStyle("black");
-   
-    
+LineChart.prototype.draw = function(g) {
+    Chart.prototype.draw.call(this, g);
     for (var i = 0; i < this.elements.length+1; i++) {
        console.log(this.elements[i].x);
         if (i > 0){    
@@ -27,7 +24,7 @@ LineChart.prototype.draw = function(g, fillColor) {
             g.moveTo(this.elements[i-1].x,this.elements[i-1].y);
             g.lineTo(this.elements[i].x,this.elements[i].y);
             g.stroke();
-           
+            g.closePath();
         }
     }
 }
@@ -41,13 +38,15 @@ LineElement.prototype = new ChartElement();
 
 LineElement.prototype.drawElement = function(g) {
     //credit: Professor Block
-    ChartElement.prototype.drawElement.call(this,g);
+    ChartElement.prototype.drawElement.call(this, g);
+    g.save();
     g.fillStyle = "red";   
     g.beginPath();
     g.arc(this.x, this.y, this.radius, 0, Math.PI*2, true);
-    g.closePath();
     g.fill();
     g.stroke();
+    g.closePath();
+    g.restore();
 }
 
 

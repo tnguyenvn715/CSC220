@@ -30,7 +30,6 @@ DataSet.prototype.readFileToArray = function(file, type, startYear) {
                     continue;
                 }
                 var value = lines[i].split(",")[1]; // get value
-                //console.log(typeof(year));
                 this.addDataPoint(year, value);
             }
         }
@@ -40,6 +39,31 @@ DataSet.prototype.readFileToArray = function(file, type, startYear) {
 DataSet.prototype.getData = function() {
     return this.data;
 }
+
+DataSet.prototype.getDataPointFromYear = function(year) {
+    //var datapoint;
+    for (var i = 0; i < this.data.length; i++){
+        if(parseInt(this.data[i].getLabel()) === parseInt(year)){
+            console.log(year);
+            return this.data[i];
+        }
+    }
+
+}
+
+
+DataSet.prototype.getIndex = function(year) {
+    //var datapoint;
+    var data = this.getData();
+    //console.info(data[2].getLabel());
+    for (var i = 0; i < data.length; i++){
+        if(parseInt(data[i].getLabel()) === parseInt(year)){
+            return i;
+        }
+    }
+
+}
+
 DataSet.prototype.setData = function(data) {
     this.data = data;
 }
@@ -53,15 +77,3 @@ DataSet.prototype.addDataPoint = function(label, value) {
     this.data.push(new DataPoint(label, value));
 }
 
-function DataPoint(label, value) {
-    this.label = label;
-    this.value = value;
-}
-
-DataPoint.prototype.getLabel = function() {
-    return this.label;
-}
-
-DataPoint.prototype.getValue = function() {
-    return this.value;
-}

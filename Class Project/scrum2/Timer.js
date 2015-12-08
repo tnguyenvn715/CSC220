@@ -9,6 +9,7 @@ function Timer(position, length, startYear, endYear) {
     this.label = startYear;
     this.startYear = startYear;
     this.endYear = endYear;
+    this.isPlayed = false;
 }
 Timer.prototype.getStartYear = function() {
     return this.startYear;
@@ -74,6 +75,8 @@ Timer.prototype.drawTimerBar =
         g.fill();
     }      
     g.closePath();
+    this.drawPlayButton();
+
 }
 
 Timer.prototype.drawLabel = function(g) {
@@ -107,4 +110,25 @@ Timer.prototype.drawSlider = function(g, fillColor, strokeColor){
 }
 Timer.prototype.updateHTMLLabel = function(label){
     document.getElementById("year").innerHTML = label ;
+}
+
+Timer.prototype.play = function(pos){
+    if((pos.getX()>=this.pos.getX()&&pos.getX()<=this.pos.getX()+this.width)||
+            (pos.getY()>=this.pos.getY()&&pos.getY()>=this.pos.getY()+this.height)){
+        this.isPlayed = true;
+    }
+    else{
+        this.isPlayed= false;
+    }
+    return this.isPlayed;
+}
+
+Timer.prototype.drawPlayButton = function(g){
+    g.beginPath();
+    g.arc(10, 10, 40, 0, 2 * Math.PI, false);
+    g.fillStyle = 'red';
+    g.fill();
+    g.lineWidth = 1;
+    g.strokeStyle = 'red';
+    g.closePath();
 }
