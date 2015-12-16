@@ -5,19 +5,15 @@ function CustomGameLoop() {
 
 CustomGameLoop.prototype = new GameLoop();
 
-CustomGameLoop.prototype.initialize = function(canvas) {
+CustomGameLoop.prototype.initialize = function(canvas, timerManager) {
     GameLoop.prototype.initialize.call(this, canvas);   
     this.inputManager = new InputManager();
-    this.elementManager = new ElementManager();
-    this.charts = [];
-    this.charts.push(new BarChart(this.canvas));
-    var input = new inputPrompter(1901, 2014);
-    var startyear = input.getInputYear();
-    var initialPos = new Point(70, 410);
-    this.timer = new Timer(new Point(70, 410), 805, 5, startyear , 2014); //INTERESTING, WHEN YOU USE INITITAL POS IT MOVES ALONG
-    this.timer.setInitialPosition(initialPos);
+    
+    this.timerManager = timerManager;
     this.data = new Resource("temperature_fig-2.csv");
-    this.data.beginLoad(this, this.onDataLoaded);   
+    this.data.beginLoad(this, this.onDataLoaded);  
+    this.chart = new BarChart(this.canvas);
+   
 }
 
 CustomGameLoop.prototype.onDataLoaded = function(resource) {
@@ -53,32 +49,43 @@ CustomGameLoop.prototype.onPointerLeave = function(id, position) {
 }
 
 CustomGameLoop.prototype.draw = function(g) {
-    GameLoop.prototype.draw.call(this, g);
-    this.charts[0].draw(g); 
-    this.timer.draw(g);    
+    GameLoop.prototype.draw.call(this, g);    
+    this.chart.draw(this.g); 
+    this.timerManager.draw(this.g); 
 }
-
+/**
+ * 
+ * @param {type} g
+ * @param {type} canvas
+ * @returns {undefined}
+ */
 CustomGameLoop.prototype.clear = function(g, canvas) {
     GameLoop.prototype.clear.call(this, g);
     g.clearRect(0, 0, this.canvas.width, this.canvas.height);    
 }
 
+/**
+ * 
+ * @returns {undefined}
+ */
 CustomGameLoop.prototype.update = function() {
     GameLoop.prototype.update.call(this);
-    if (parseInt(this.timer.getLabel()) >= 2014){
-        this.charts[0].clearChart(this.g);
-        this.timer.resetSlider();
+    if (this.timerManager.getLabel() >= 2014 && 
+                        this.timerManager.isPlayed == true) {
+        this.timerManager.isPlayed == false;
+        
     }
-    else{
-        var span = this.timer.getEndYear()- this.timer.getStartYear();
+    else {
+        this.timerManager.isPlayed == true; 
+        this.timerManager.updateTimer(); 
+        var currentYear = this.timerManager.getLabel();
         var dataText = this.data.getLoadedString();
-        var currentData = new DataSet("CurTempData", dataText, 0, 
-                            this.timer.getStartYear());        
-        this.timer.moveSlider();   
-        var currentyear = this.timer.getLabel();
-        var point = currentData.getDataPointFromYear(currentyear);
-        this.charts[0].addElement(point, this.timer, span);   
+        var currentData = new DataSet("CurTempData", dataText, 
+                            this.timerManager.getStartYear());  
+        var point = currentData.getDataPointFromYear(currentYear);
+        this.chart.updateChart(this.timerManager, point);  
     }
+    
 }
 // </editor-fold>
 

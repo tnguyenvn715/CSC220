@@ -1,13 +1,12 @@
 /**
- * Encapulates properties of series of data
+ * Encapulates properties of series of data points
  * @constructor
  * @param {String} name
  * @param {String} textFile
- * @param {Number} type
  * @param {Number} year
  * @returns {DataSet}
  */
-function DataSet(name, textFile, type, year) {
+function DataSet(name, textFile, year) {
     /**
      * 
      */
@@ -19,12 +18,11 @@ function DataSet(name, textFile, type, year) {
     /**
      * 
      */
-    this.type = type;
-    /**
-     * 
-     */
+    
     this.textFile = textFile;
-    this.initializeData(year);
+    this.year = year;
+    //console.log(year);
+    this.initializeData(this.year);
 }
 
 /**
@@ -33,7 +31,8 @@ function DataSet(name, textFile, type, year) {
  * @returns {undefined}
  */
 DataSet.prototype.initializeData = function(startYear) {
-    this.readFileToArray(this.textFile, this.type, startYear);
+    //console.log(startYear);
+    this.readFileToArray(this.textFile, startYear);
 }
 
 /**
@@ -43,12 +42,12 @@ DataSet.prototype.initializeData = function(startYear) {
  * @param {Number} startYear
  * @returns {undefined}
  */
-DataSet.prototype.readFileToArray = function(file, type, startYear) {
+DataSet.prototype.readFileToArray = function(file, startYear) {
     // type = 0 : temperature anomaly to present
     // type = 1 : future projection of temperature 
     // type = 2 : ice data to present
     // type = 3 : future projection of ice data
-    if (type == 0){
+    
         var lines = [];
         lines = file.split(/\r\n|\n/);
         for(var i = 0; i < lines.length; i++){
@@ -60,9 +59,10 @@ DataSet.prototype.readFileToArray = function(file, type, startYear) {
                 }
                 var value = lines[i].split(",")[1]; // get value
                 this.addDataPoint(year, value);
+                
             }
         }
-    }
+    
 }
 
 DataSet.prototype.getData = function() {
@@ -76,8 +76,9 @@ DataSet.prototype.getData = function() {
  */
 DataSet.prototype.getDataPointFromYear = function(year) {
     for (var i = 0; i < this.data.length; i++){
-        if(parseInt(this.data[i].getLabel()) === parseInt(year)){
+        if(this.data[i].getLabel() == year){
             return this.data[i];
+            
         }
     }
 

@@ -302,9 +302,11 @@ GameLoop.prototype.onTimerTick = function() {
     this.update(frameDuration);
     this.clear(this.g);
     this.draw(this.g);*/
-    this.update();
+    
     this.clear(this.g);
     this.draw(this.g);
+    this.update();
+    
 }
 
 /**
