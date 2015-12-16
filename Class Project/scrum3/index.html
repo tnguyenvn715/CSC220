@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Class Project</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <script src="Resource.js"></script>
+        <script src ="DataPoint.js"></script> 
+        <script src ="DataSet.js"></script> 
+        <script src="inputPrompter.js"></script>
+        <script src="TimerElement.js"></script>
+        <script src="TimerBar.js"></script>
+        <script src="TimerSlider.js"></script>
+        <script src="TimerManager.js"></script>
+        
+        <script src="ElementManager.js"></script>
+        
+        <script src="Chart.js"></script>
+        <script src ="BarChart.js"></script>
+        <script src ="LineChart.js"></script>
+        <script src="GameLoop.js"></script>
+        <script src ="CustomGameLoop.js"></script>
+        <script src ="main.js"></script>
+       
+        <style>
+            h1 { color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 40px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center; }
+            body {
+                background-color: white;
+            }
+            #projection_button{
+            background-color: #f5871f;
+            border: 2px solid #41002c;
+            color: #FFF;
+            text-align: center;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            padding: 10px; 
+}           
+        </style>
+    </head>
+    <body>
+        <div><h1>World Temperature Anomaly (F)</h1></div>
+        <h1 id = "year"></h1>
+        <div>
+            <input type="text" id="yearInput" name="Year" value="1901"><br>
+            <button onclick="myFunction()">Resubmit</button>
+
+        </div>
+        <div>
+            <button id="projection_button" type="button" onclick="showProjection()">
+                Projected Data
+            </button>
+        </div>
+        <canvas id="canvas"> </canvas>     
+    </body>
+</html>
