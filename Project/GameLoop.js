@@ -127,9 +127,9 @@ GameLoop.Settings = {
 
 GameLoop.prototype.initializeGraphics = function() {
     this.g = this.canvas.getContext("2d");
-    this.canvas.width = 1000;
-    this.canvas.height = 1000;
-    this.canvas.style.background = "#F9F1DC";
+    this.canvas.width = 900;
+    this.canvas.height = 900;
+    this.canvas.style.background = "white";
 
 }
 GameLoop.prototype.initializeInput = function() {
@@ -400,7 +400,7 @@ GameLoop.prototype.onTimerTick = function() {
  * @returns {undefined}
  */
 GameLoop.prototype.clear = function(g) {
-    g.fillStyle = "#F9F1DC";
+    g.fillStyle = "white";
     g.fillRect(0, 0, this.canvas.width, this.canvas.height);
 }
 

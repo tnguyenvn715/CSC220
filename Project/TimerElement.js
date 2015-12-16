@@ -100,6 +100,14 @@ TimerElement.prototype.setColor = function(newColor) {
 }
 
 /**
+ * Get fill color of timer element
+ * @returns {String}
+ */
+TimerElement.prototype.setColor = function() {
+    return this.fillColor;
+}
+
+/**
  * Check if mouse position is within bounds of the timer element
  * @param {Point} mousePos
  * @returns {Boolean}

@@ -10,7 +10,7 @@ function initialize() {
     var timerManager = new TimerManager(timerSlider, timerBar);
     var customGameLoop = new CustomGameLoop();
     customGameLoop.initialize(canvas, timerManager);
-    customGameLoop.setCanvasSize(1000, 600);
+    customGameLoop.setCanvasSize(1000, 600); //still not working
     //customGameLoop.fillWindow();
 
 
