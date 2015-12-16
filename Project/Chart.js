@@ -1,6 +1,7 @@
 /**
  * Class representing a chart.
  * @constructor
+ * @param {Canvas} name description
  * @returns {Chart} 
  */       
 function Chart(canvas) {
@@ -12,6 +13,11 @@ function Chart(canvas) {
         
     }
 }  
+
+/**
+ * 
+ * @returns {undefined}
+ */
 Chart.prototype.initializeInputs = function(){
     //credited to Professor Block
     this.canvas.forwardInputTo = this;
@@ -19,6 +25,13 @@ Chart.prototype.initializeInputs = function(){
         this.forwardInputTo.onMouseMove(e);
     }
 }
+
+/**
+ * 
+ * @param {Canvas} canvas
+ * @param {MouseEvent} e
+ * @returns {Chart.prototype.getMousePos.ChartAnonym$0}
+ */
 Chart.prototype.getMousePos = function(canvas, e) {
     //credit: Professor Block
     var offset = canvas.getBoundingClientRect();
@@ -27,6 +40,12 @@ Chart.prototype.getMousePos = function(canvas, e) {
         y: e.clientY - offset.top
     };
 }
+
+/**
+ * 
+ * @param {MouseEvent} e
+ * @returns {undefined}
+ */
 Chart.prototype.onMouseMove = function(e){
     var pos = this.getMousePos(this.canvas, e);
     for (var i = 0; i < this.elements.length; i++) { //credit: Professor Block
@@ -34,13 +53,19 @@ Chart.prototype.onMouseMove = function(e){
     }
     this.draw();
 }
-    
+
+/**
+ * 
+ * @param {Graphics} g
+ * @returns {undefined}
+ */
 Chart.prototype.draw = function(g) {
     this.drawYAxis(g, 70, 0, 400, 80);
-    this.drawXAxis(g, 240, 70, 870);
+    this.drawXAxis(g, 240, 70, 950);
     for (var i = 0; i < this.elements.length; i++) {
         this.elements[i].drawElement(g);
     }
+    
 }
 Chart.prototype.clearElements = function() {
     this.elements = [];
@@ -72,29 +97,14 @@ Chart.prototype.calculateWidth = function(yearSpan) {
         width = 5;
     }
     return width;
-    if(yearSpan >= 15 && yearSpan <= 20){
-        width = 30;
-    }
-    if(yearSpan >= 20 && yearSpan <= 25){
-        width = 25;
-    }
-    if(yearSpan >= 25 && yearSpan <= 40){
-        width = 15;
-    }
-    if(yearSpan >= 40 && yearSpan <= 60){
-        width = 10;
-    }
-    if(yearSpan >= 60){
-        width = 5;
-    }
-    return width;
+    
 }
 
 /**
  * 
- * @param {type} dataPoint
- * @param {type} xpos
- * @param {type} width
+ * @param {Point} dataPoint
+ * @param {Number} xpos
+ * @param {Number} width
  * @returns {undefined}
  */
 Chart.prototype.addElement = function(dataPoint, xpos, width) {
@@ -108,13 +118,25 @@ Chart.prototype.addElement = function(dataPoint, xpos, width) {
     this.elements.push(element); 
 }
 
+/**
+ * 
+ * @param {TimeManager} timerManager
+ * @param {DataPoint} point
+ * @returns {undefined}
+ */
 Chart.prototype.updateChart = function(timerManager, point){
-    var yearSpan = timerManager.getNumYears();
-    var xpos = timerManager.getSliderPosition().getX();
-    var currentyear = timerManager.getLabel();
-    var width = this.calculateWidth(yearSpan);
-    this.addElement(point, xpos, width); 
+    //override
 }
+
+/**
+ * 
+ * @param {Graphics} g
+ * @param {Number} xpos
+ * @param {Number} ymin
+ * @param {Number} ymax
+ * @param {Number} yincrement
+ * @returns {undefined}
+ */
 Chart.prototype.drawYAxis = function(g, xpos, ymin, ymax, yincrement) {
     g.beginPath();
     g.moveTo(xpos,ymin);
@@ -139,10 +161,25 @@ Chart.prototype.drawYAxis = function(g, xpos, ymin, ymax, yincrement) {
         
     }
 }
+
+/**
+ * 
+ * @param {Graphics} g
+ * @returns {undefined}
+ */
 Chart.prototype.clearChart = function(g){
     this.elements = [];
     this.draw(g);
 }
+
+/**
+ * 
+ * @param {Graphics} g
+ * @param {Number} ypos
+ * @param {Number} xmin
+ * @param {Number} xmax
+ * @returns {undefined}
+ */
 Chart.prototype.drawXAxis = function(g, ypos, xmin, xmax) {
     g.beginPath();
     g.moveTo(xmin,ypos);
@@ -150,7 +187,17 @@ Chart.prototype.drawXAxis = function(g, ypos, xmin, xmax) {
     g.stroke();
     g.closePath(); 
 }
-//ChartElement Constructor
+
+/**
+ * @constructor
+ * @param {String} label
+ * @param {Number} value
+ * @param {Number} x
+ * @param {Number} y
+ * @param {Number} width
+ * @param {Number} height
+ * @returns {ChartElement}
+ */
 function ChartElement(label, value, x, y, width, height) {
     this.label = label;
     this.value = value;
@@ -159,17 +206,33 @@ function ChartElement(label, value, x, y, width, height) {
     this.width = width;
     this.height= height; 
     this.isHover = false;
-    this.highlightColor = "#cf2435";
-    this.normalColor= "#52bab3";
+    this.highlightColor = "#8acc25";
+    this.normalColor= "#cf2435";
 }
 
+/**
+ * 
+ * @param {Graphics} g
+ * @returns {undefined}
+ */
 ChartElement.prototype.drawElement = function(g) {
-    g.beginPath();
-    g.fillStyle =  this.isHover ? "black": "white"; 
-    g.font = "9px Calibri";
-    g.fillText(this.value, this.x , this.y + this.height + 40);
-    g.closePath();
+    if(this.isHover == true) {
+        //add transparency here to make box overlap if needed
+        var text = this.label + ': ' + this.value;
+        g.fillStyle = "gray";
+        g.fillRect(this.x, 50, 80, 40);
+        g.fillStyle = "white";
+        g.font="10pt Times";
+        var textWidth = g.measureText(text).width;
+        g.fillText(text, this.x + 40 - (textWidth/ 2), 65);
+    }
 }
+
+/**
+ * 
+ * @param {Position} mousePos
+ * @returns {undefined}
+ */
 ChartElement.prototype.isHit = function(mousePos) {
     if((mousePos.x > this.x  && mousePos.x < (this.x+ this.width)) 
             && ((mousePos.y > this.y && mousePos.y < (this.y + this.height)) || 

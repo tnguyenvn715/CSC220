@@ -1,35 +1,118 @@
 // <editor-fold desc="Point">
+/**
+ * 
+ * @param {type} x
+ * @param {type} y
+ * @returns {Point}
+ */
 function Point(x, y) {
     this.setX(x);
     this.setY(y);
 }
 
+/**
+ * 
+ * @returns {Point.x}
+ */
 Point.prototype.getX = function() {
     return this.x;
 }
 
+/**
+ * 
+ * @returns {Point.y}
+ */
 Point.prototype.getY = function() {
     return this.y;
 }
 
+/**
+ * 
+ * @param {type} x
+ * @returns {undefined}
+ */
 Point.prototype.setX = function(x) {
     this.x = x;
 }
 
+/**
+ * 
+ * @param {type} y
+ * @returns {undefined}
+ */
 Point.prototype.setY = function(y) {
     this.y = y;
 }
 
+/**
+ * 
+ * @returns {Point}
+ */
 Point.prototype.clone = function() {
     return new Point(this.x, this.y);
 }
 
+/**
+ * 
+ * @param {type} p
+ * @returns {Point}
+ */
 Point.prototype.substract = function(p) {
     return new Point(this.x - p.x, this.y - p.y);
 }
 
+/**
+ * 
+ * @param {type} p
+ * @returns {Point}
+ */
 Point.prototype.add = function(p) {
     return new Point(this.x + p.x, this.y + p.y);
+}
+
+/**
+ * 
+ * @returns {String}
+ */
+Point.prototype.toString = function() {
+    return "(" + (Math.round(this.getX() * 1000) / 1000) + ", " +
+            (Math.round(this.getY() * 1000) / 1000) + ")";
+}
+
+/**
+ * 
+ * @returns {Number}
+ */
+Point.prototype.getLength = function() {
+    return Math.sqrt(Math.pow(this.getX(), 2) + Math.pow(this.getY(), 2));
+}
+
+/**
+ * 
+ * @returns {undefined}
+ */
+Point.prototype.normalize = function() {
+    var length = this.getLength();
+    this.divideBy(length);
+}
+
+/**
+ * 
+ * @param {type} s
+ * @returns {undefined}
+ */
+Point.prototype.divideBy = function(s) {
+    this.x /= s;
+    this.y /= s;
+}
+
+/**
+ * 
+ * @param {type} p
+ * @returns {type}
+ */
+Point.prototype.dotProduct = function(p) {
+    return this.getX() * p.getX() + this.getY() * p.getY();
 }
 // </editor-fold> 
 
@@ -44,8 +127,10 @@ GameLoop.Settings = {
 
 GameLoop.prototype.initializeGraphics = function() {
     this.g = this.canvas.getContext("2d");
-    this.canvas.width = 900;
-    this.canvas.height = 900;
+    this.canvas.width = 1000;
+    this.canvas.height = 1000;
+    this.canvas.style.background = "#F9F1DC";
+
 }
 GameLoop.prototype.initializeInput = function() {
     this.canvas.associatedGameEngine = this;
@@ -302,10 +387,10 @@ GameLoop.prototype.onTimerTick = function() {
     this.update(frameDuration);
     this.clear(this.g);
     this.draw(this.g);*/
-    
+    this.update();
     this.clear(this.g);
     this.draw(this.g);
-    this.update();
+    
     
 }
 
@@ -315,7 +400,7 @@ GameLoop.prototype.onTimerTick = function() {
  * @returns {undefined}
  */
 GameLoop.prototype.clear = function(g) {
-    g.fillStyle = "white";
+    g.fillStyle = "#F9F1DC";
     g.fillRect(0, 0, this.canvas.width, this.canvas.height);
 }
 
