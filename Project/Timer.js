@@ -96,6 +96,7 @@ Timer.prototype.drawSlider = function(g, fillColor, strokeColor){
     g.closePath();
 }
 Timer.prototype.updateHTMLLabel = function(label){
+    document.getElementById("year").style.font = "bold 65px times,serif";
     document.getElementById("year").innerHTML = label ;
 }
 
@@ -162,4 +163,5 @@ Timer.prototype.draw = function(g) {
     this.drawPauseButton(g, 25, 'red');
     this.drawLabel(g);
     this.drawSlider(g, 'black', 'black');
+    this.updateHTMLLabel(this.label);
 }

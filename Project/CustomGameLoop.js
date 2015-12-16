@@ -9,7 +9,6 @@ CustomGameLoop.prototype.initialize = function(canvas) {
     GameLoop.prototype.initialize.call(this, canvas);   
     this.inputManager = new InputManager();
     this.elementManager = new ElementManager();
-    //this.elementManager.initializeElements();
     this.charts = [];
     this.charts.push(new BarChart(this.canvas));
     var input = new inputPrompter(1901, 2014);
@@ -56,8 +55,7 @@ CustomGameLoop.prototype.onPointerLeave = function(id, position) {
 CustomGameLoop.prototype.draw = function(g) {
     GameLoop.prototype.draw.call(this, g);
     this.charts[0].draw(g); 
-    this.timer.draw(g);
-    
+    this.timer.draw(g);    
 }
 
 CustomGameLoop.prototype.clear = function(g, canvas) {
@@ -66,20 +64,20 @@ CustomGameLoop.prototype.clear = function(g, canvas) {
 }
 
 CustomGameLoop.prototype.update = function() {
-    GameLoop.prototype.update.call();
+    GameLoop.prototype.update.call(this);
     if (parseInt(this.timer.getLabel()) >= 2014){
         this.charts[0].clearChart(this.g);
         this.timer.resetSlider();
     }
     else{
-        
+        var span = this.timer.getEndYear()- this.timer.getStartYear();
         var dataText = this.data.getLoadedString();
         var currentData = new DataSet("CurTempData", dataText, 0, 
                             this.timer.getStartYear());        
         this.timer.moveSlider();   
         var currentyear = this.timer.getLabel();
         var point = currentData.getDataPointFromYear(currentyear);
-        this.charts[0].addElement(point, this.timer);   
+        this.charts[0].addElement(point, this.timer, span);   
     }
 }
 // </editor-fold>
