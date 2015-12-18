@@ -1,9 +1,9 @@
 // <editor-fold desc="Point">
 /**
- * 
- * @param {type} x
- * @param {type} y
- * @returns {Point}
+ * Represent a point
+ * @constructor
+ * @param {Number} x The x position
+ * @param {Number} y The y position
  */
 function Point(x, y) {
     this.setX(x);
@@ -11,7 +11,7 @@ function Point(x, y) {
 }
 
 /**
- * 
+ * Get the x position
  * @returns {Point.x}
  */
 Point.prototype.getX = function() {
@@ -19,7 +19,7 @@ Point.prototype.getX = function() {
 }
 
 /**
- * 
+ * Get the y position
  * @returns {Point.y}
  */
 Point.prototype.getY = function() {
@@ -27,8 +27,8 @@ Point.prototype.getY = function() {
 }
 
 /**
- * 
- * @param {type} x
+ * Set the x position
+ * @param {Number} x
  * @returns {undefined}
  */
 Point.prototype.setX = function(x) {
@@ -36,8 +36,8 @@ Point.prototype.setX = function(x) {
 }
 
 /**
- * 
- * @param {type} y
+ * Set the y position
+ * @param {Number} y
  * @returns {undefined}
  */
 Point.prototype.setY = function(y) {
@@ -45,7 +45,7 @@ Point.prototype.setY = function(y) {
 }
 
 /**
- * 
+ * Get the clone of the point
  * @returns {Point}
  */
 Point.prototype.clone = function() {
@@ -53,8 +53,8 @@ Point.prototype.clone = function() {
 }
 
 /**
- * 
- * @param {type} p
+ * Subtract input point from this point
+ * @param {Point} p
  * @returns {Point}
  */
 Point.prototype.substract = function(p) {
@@ -62,8 +62,8 @@ Point.prototype.substract = function(p) {
 }
 
 /**
- * 
- * @param {type} p
+ * Add input point to this point
+ * @param {Point} p
  * @returns {Point}
  */
 Point.prototype.add = function(p) {
@@ -71,7 +71,7 @@ Point.prototype.add = function(p) {
 }
 
 /**
- * 
+ * Convert point information to string format
  * @returns {String}
  */
 Point.prototype.toString = function() {
@@ -80,7 +80,7 @@ Point.prototype.toString = function() {
 }
 
 /**
- * 
+ * Get length of point
  * @returns {Number}
  */
 Point.prototype.getLength = function() {
@@ -88,8 +88,7 @@ Point.prototype.getLength = function() {
 }
 
 /**
- * 
- * @returns {undefined}
+ * Normalize the point
  */
 Point.prototype.normalize = function() {
     var length = this.getLength();
@@ -97,7 +96,7 @@ Point.prototype.normalize = function() {
 }
 
 /**
- * 
+ * Divide point by scale input
  * @param {type} s
  * @returns {undefined}
  */
@@ -107,7 +106,7 @@ Point.prototype.divideBy = function(s) {
 }
 
 /**
- * 
+ * Multiply two points to produce dot product
  * @param {type} p
  * @returns {type}
  */
@@ -116,22 +115,38 @@ Point.prototype.dotProduct = function(p) {
 }
 // </editor-fold> 
 
+// <editor-fold desc="GameLoop">
+/**
+ * 
+ * @returns {GameLoop}
+ */
 function GameLoop() {
 }
 
+/**
+ * 
+ * @type type
+ */
 GameLoop.Settings = {
     Input : {
         MOUSE_ID : "MOUSE"
     }
 }
-
+/**
+ * 
+ * @returns {undefined}
+ */
 GameLoop.prototype.initializeGraphics = function() {
     this.g = this.canvas.getContext("2d");
     this.canvas.width = 900;
     this.canvas.height = 900;
     this.canvas.style.background = "white";
-
 }
+
+/**
+ * 
+ * @returns {undefined}
+ */
 GameLoop.prototype.initializeInput = function() {
     this.canvas.associatedGameEngine = this;
     this.canvas.onmousemove = function(e) {
@@ -438,3 +453,4 @@ GameLoop.prototype.initialize = function(canvas) {
     this.initializeInput();
     this.initializeTimer();
 }
+// </editor-fold> 

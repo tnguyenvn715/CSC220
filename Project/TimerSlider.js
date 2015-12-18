@@ -3,37 +3,42 @@
 /**
  * Represent a Timer slider
  * @constructor
- * @augments TimerElement
+ * @@extends TimerElement
  */
 function TimerSlider(position, width, height, 
                         fillColor, startYear, endYear) {
     TimerElement.call(this, position, width, height, fillColor);
     /**
      * The starting year of the timer
+     * @private
      * @type Number
      */
     this.startYear = startYear;
     
     /**
      * The last year of the timer
+     * @private
      * @type Number
      */
     this.endYear = endYear;
     
     /**
      * The label of the slider
+     * @private
      * @type Number
      */
     this.label = startYear;
     
     /**
      * The signifier for when slider is clicked
+     * @private
      * @type Boolean
      */
     this.isClicked = false;
     
     /**
      * The signifier for when slider is dragged
+     * @private
      * @type Boolean
      */
     this.isDragged = false;

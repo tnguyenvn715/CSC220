@@ -2,15 +2,11 @@
 /**
  * Represent a point
  * @constructor
+ * @param {Number} x The x position
+ * @param {Number} y The y position
  */
 function Point(x, y) {
-    /**
-     * @type Number
-     */
     this.setX(x);
-    /**
-     * @type Number
-     */
     this.setY(y);
 }
 

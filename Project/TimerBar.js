@@ -2,7 +2,7 @@
 
 /**
  * @constructor
- * @augments TimerElement
+ * @extends TimerElement
  */
 function TimerBar(position, width, height, fillColor) {
     TimerElement.call(this, position, width, height, fillColor);

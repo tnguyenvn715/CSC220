@@ -1,82 +1,81 @@
+// <editor-fold desc="Chart">
 /**
- * Class representing a chart.
+ * Encapsulate features of a chart along with functions
  * @constructor
- * @param {Canvas} name description
- * @returns {Chart} 
  */       
 function Chart(canvas) {
     if (typeof canvas !== "undefined") { //credit: Professor Block
+        /**
+         * The area where graphics are drawn
+         * @private
+         * @type Canvas
+         */
         this.canvas = canvas;
-        this.elements = [];
-        this.g = canvas.getContext("2d");
-        this.initializeInputs();
         
+        /**
+         * An array of chart elements
+         * @private
+         * @type Array
+         */
+        this.elements = [];
+        
+        /**
+         * The graphic context
+         * @private
+         * @type Graphics
+         */
+        this.g = canvas.getContext("2d");
     }
 }  
 
 /**
- * 
- * @returns {undefined}
+ * Get the array of chart elements
+ * @returns {Array}
  */
-Chart.prototype.initializeInputs = function(){
-    //credited to Professor Block
-    this.canvas.forwardInputTo = this;
-    this.canvas.onmousemove = function(e){
-        this.forwardInputTo.onMouseMove(e);
-    }
+Chart.prototype.getChartElements = function() {
+    return this.elements;
 }
 
 /**
- * 
- * @param {Canvas} canvas
- * @param {MouseEvent} e
- * @returns {Chart.prototype.getMousePos.ChartAnonym$0}
+ * Add chart element to chart
+ * @param {Point} dataPoint The data point to be mapped
+ * @param {Number} xpos The x-pos of chart element
+ * @param {Number} width The width of chart element
  */
-Chart.prototype.getMousePos = function(canvas, e) {
-    //credit: Professor Block
-    var offset = canvas.getBoundingClientRect();
-    return {
-        x: e.clientX - offset.left,
-        y: e.clientY - offset.top
-    };
-}
-
-/**
- * 
- * @param {MouseEvent} e
- * @returns {undefined}
- */
-Chart.prototype.onMouseMove = function(e){
-    var pos = this.getMousePos(this.canvas, e);
-    for (var i = 0; i < this.elements.length; i++) { //credit: Professor Block
-        this.elements[i].isHit(pos);
-    }
-    this.draw();
-}
-
-/**
- * 
- * @param {Graphics} g
- * @returns {undefined}
- */
-Chart.prototype.draw = function(g) {
-    this.drawYAxis(g, 70, 0, 400, 80);
-    this.drawXAxis(g, 240, 70, 950);
-    for (var i = 0; i < this.elements.length; i++) {
-        this.elements[i].drawElement(g);
-    }
+Chart.prototype.addElement = function(dataPoint, xpos, width) {
+    var value = dataPoint.getValue();
+    var label = dataPoint.getLabel();
+    var height = value * 80;
+    var ypos = 240 - height;
     
+    var element = this.initializeChartElement
+                    (label, value, xpos, ypos, width, height);
+    this.elements.push(element); 
 }
+
+/**
+ * Reset the array of elements to none
+ */
 Chart.prototype.clearElements = function() {
     this.elements = [];
 }
 
 /**
- * 
- * @param {Number} yearSpan
+ * Update the chart with next data point
+ * @param {TimeManager} timerManager The timer components
+ * @param {DataPoint} point The data point to be mapped
+ * @returns {undefined}
+ */
+Chart.prototype.updateChart = function(timerManager, point){
+    //override
+}
+
+/**
+ * Calculate the most fit width for chart element
+ * @param {Number} yearSpan - Number of years between start year and end year
  * @returns {Number}
  */
-Chart.prototype.calculateWidth = function(yearSpan) {
+Chart.prototype.calculateElementWidth = function(yearSpan) {
     var width = 0;
     if(yearSpan >= 0 && yearSpan <= 10){
         width = 50;
@@ -96,46 +95,16 @@ Chart.prototype.calculateWidth = function(yearSpan) {
     if(yearSpan > 60){
         width = 5;
     }
-    return width;
-    
+    return width; 
 }
 
 /**
- * 
- * @param {Point} dataPoint
- * @param {Number} xpos
- * @param {Number} width
- * @returns {undefined}
- */
-Chart.prototype.addElement = function(dataPoint, xpos, width) {
-    var value = dataPoint.getValue();
-    var label = dataPoint.getLabel();
-    var height = value * 80;
-    var ypos = 240 - height;
-    
-    var element = this.initializeChartElement
-                    (label, value, xpos, ypos, width, height);
-    this.elements.push(element); 
-}
-
-/**
- * 
- * @param {TimeManager} timerManager
- * @param {DataPoint} point
- * @returns {undefined}
- */
-Chart.prototype.updateChart = function(timerManager, point){
-    //override
-}
-
-/**
- * 
- * @param {Graphics} g
- * @param {Number} xpos
- * @param {Number} ymin
- * @param {Number} ymax
- * @param {Number} yincrement
- * @returns {undefined}
+ * Draw the y axis
+ * @param {Graphics} g The graphics context
+ * @param {Number} xpos The position x of axis
+ * @param {Number} ymin The highest position of axis
+ * @param {Number} ymax The lowest position of axis
+ * @param {Number} yincrement The pixels between scale increments
  */
 Chart.prototype.drawYAxis = function(g, xpos, ymin, ymax, yincrement) {
     g.beginPath();
@@ -163,22 +132,11 @@ Chart.prototype.drawYAxis = function(g, xpos, ymin, ymax, yincrement) {
 }
 
 /**
- * 
- * @param {Graphics} g
- * @returns {undefined}
- */
-Chart.prototype.clearChart = function(g){
-    this.elements = [];
-    this.draw(g);
-}
-
-/**
- * 
- * @param {Graphics} g
- * @param {Number} ypos
- * @param {Number} xmin
- * @param {Number} xmax
- * @returns {undefined}
+ * Draw the x axis
+ * @param {Graphics} g The graphics context
+ * @param {Number} ypos The position y of axis
+ * @param {Number} xmin The minimum x position of axis
+ * @param {Number} xmax The maximum x position of axis
  */
 Chart.prototype.drawXAxis = function(g, ypos, xmin, xmax) {
     g.beginPath();
@@ -189,35 +147,95 @@ Chart.prototype.drawXAxis = function(g, ypos, xmin, xmax) {
 }
 
 /**
+ * Draw the chart
+ * @param {Graphics} g The graphics context
+ */
+Chart.prototype.draw = function(g) {
+    this.drawYAxis(g, 70, 0, 400, 80);
+    this.drawXAxis(g, 240, 70, 950);
+    for (var i = 0; i < this.elements.length; i++) {
+        this.elements[i].drawElement(g);
+    }  
+}
+// </editor-fold>
+
+// <editor-fold desc="ChartElement">
+/**
+ * Encapsulates features of a chart element along with functions
  * @constructor
- * @param {String} label
- * @param {Number} value
- * @param {Number} x
- * @param {Number} y
- * @param {Number} width
- * @param {Number} height
- * @returns {ChartElement}
  */
 function ChartElement(label, value, x, y, width, height) {
+    /**
+     * The x-label of chart element
+     * @private
+     * @type Number
+     */
     this.label = label;
+    
+    /**
+     * The y-value of chart element
+     * @private
+     * @type Number
+     */
     this.value = value;
+    
+    /**
+     * The x-pos of chart element
+     * @private
+     * @type Number
+     */
     this.x = x;
+    
+    /**
+     * The y-pos of chart element
+     * @private
+     * @type Number
+     */
     this.y = y;
+    
+    /**
+     * The width of chart element
+     * @private
+     * @type Number
+     */
     this.width = width;
+    
+    /**
+     * The height of chart element
+     * @private
+     * @type Number
+     */
     this.height= height; 
+    
+    /**
+     * The boolean signify when chart element is hovered
+     * @private
+     * @type Boolean
+     */
     this.isHover = false;
+    
+    /**
+     * The color when chart element is hovered
+     * @private
+     * @type Color
+     */
     this.highlightColor = "#8acc25";
+    
+    /**
+     * The normal color of chart element
+     * @private
+     * @type Color
+     */
     this.normalColor= "#cf2435";
 }
 
 /**
- * 
- * @param {Graphics} g
+ * Draw the chart element's stats when hovered
+ * @param {Graphics} g The graphics context
  * @returns {undefined}
  */
 ChartElement.prototype.drawElement = function(g) {
     if(this.isHover == true) {
-        //add transparency here to make box overlap if needed
         var text = this.label + ': ' + this.value;
         g.fillStyle = "gray";
         g.fillRect(this.x, 50, 80, 40);
@@ -229,19 +247,19 @@ ChartElement.prototype.drawElement = function(g) {
 }
 
 /**
- * 
- * @param {Position} mousePos
- * @returns {undefined}
+ * Check if pointer event is within bounds of a chart element
+ * @param {Position} mousePos Position of pointer event
  */
-ChartElement.prototype.isHit = function(mousePos) {
-    if((mousePos.x > this.x  && mousePos.x < (this.x+ this.width)) 
-            && ((mousePos.y > this.y && mousePos.y < (this.y + this.height)) || 
-            (mousePos.y < this.y && mousePos.y > (this.y + this.height)))){
+ChartElement.prototype.isHit = function(position) {
+    if((position.x > this.x  && position.x < (this.x+ this.width)) 
+            && ((position.y > this.y && position.y < (this.y + this.height)) || 
+            (position.y < this.y && position.y > (this.y + this.height)))){
         this.isHover = true;    
     }
     else{
         this.isHover = false;
     }
 }
-    
+// </editor-fold>
+ 
  

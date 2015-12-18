@@ -7,32 +7,32 @@
 function TimerElement(position, width, height, fillColor) {
     /**
      * The position of the element
+     * @private
      * @type Point 
      */
     this.position = position;
     
     /**
      * The width of the element
+     * @private
      * @type Number
      */
     this.width = width;
     
     /**
      * The height of the element
+     * @private
      * @type Number
      */
     this.height = height;
     
     /**
      * The color of the element
+     * @private
      * @type String
      */
     this.fillColor = fillColor;
     
-    /**
-     * @type Array
-     */
-    this.children = [];
 }
 
 /**

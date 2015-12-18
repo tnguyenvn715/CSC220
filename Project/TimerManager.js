@@ -7,18 +7,21 @@
 function TimerManager(timerSlider, timerBar) {
     /**
      * The TimerSlider
+     * @private
      * @type TimerSlider
      */
     this.timerSlider = timerSlider;
     
     /**
-     * The TimerBar 
+     * The TimerBar
+     * @private 
      * @type TimerBar
      */
     this.timerBar = timerBar; 
     
     /**
      * Signifier for when timer is being played
+     * @private
      * @type Boolean
      */
     this.isPlayed = true;

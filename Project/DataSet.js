@@ -1,29 +1,36 @@
 // <editor-fold desc="DataPoint">
 /**
- * Encapulates properties of series of data points
+ * Represent a set of data points
  * @constructor
  */
 function DataSet(type, textFile, startYear) {
     /**
      * the type of data
+     * @private
      * @type String
      */
     this.type = type;
     /**
-     * the data array
+     * the array of data points
+     * @private
      * @type array
      */
     this.data = [];
+    
     /**
      * the string format of data file
+     * @private
      * @type String
      */
     this.textFile = textFile;
+    
     /**
      * the starting year
+     * @private
      * @type Number
      */
     this.startYear = startYear;
+    
     this.initializeData();
 }
 
@@ -75,7 +82,7 @@ DataSet.prototype.readFileToArray = function() {
  * Get the data array 
  * @returns {Array}
  */
-DataSet.prototype.getDataList = function() {
+DataSet.prototype.getDataArray = function() {
     return this.data;
 }
 
@@ -98,7 +105,7 @@ DataSet.prototype.getDataPointFromYear = function(year) {
  * @param {Number} year The requested year
  * @returns {Number}
  */
-DataSet.prototype.getIndex = function(year) {
+DataSet.prototype.getIndexFromYear = function(year) {
     var data = this.getData();
     for (var i = 0; i < data.length; i++){
         if(parseInt(data[i].getLabel()) === parseInt(year)){
@@ -127,7 +134,7 @@ DataSet.prototype.getType = function() {
  * Set the type of the data set
  * @param {String} type The new type for the data set
  */
-DataSet.prototype.setName = function(type) {
+DataSet.prototype.setType = function(type) {
     this.type = type;
 }
 

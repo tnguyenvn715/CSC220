@@ -1,23 +1,27 @@
 // <editor-fold desc="Chart">
 /**
- * Encapsulates features of a chart along with functions
+ * Encapsulate features of a chart along with functions
  * @constructor
- * @param {Canvas} canvas - where chart graphics is drawn on
  */       
 function Chart(canvas) {
     if (typeof canvas !== "undefined") { //credit: Professor Block
         /**
          * The area where graphics are drawn
+         * @private
          * @type Canvas
          */
         this.canvas = canvas;
+        
         /**
          * An array of chart elements
+         * @private
          * @type Array
          */
         this.elements = [];
+        
         /**
          * The graphic context
+         * @private
          * @type Graphics
          */
         this.g = canvas.getContext("2d");
@@ -71,7 +75,7 @@ Chart.prototype.updateChart = function(timerManager, point){
  * @param {Number} yearSpan - Number of years between start year and end year
  * @returns {Number}
  */
-Chart.prototype.calculateWidth = function(yearSpan) {
+Chart.prototype.calculateElementWidth = function(yearSpan) {
     var width = 0;
     if(yearSpan >= 0 && yearSpan <= 10){
         width = 50;
@@ -163,46 +167,63 @@ Chart.prototype.draw = function(g) {
 function ChartElement(label, value, x, y, width, height) {
     /**
      * The x-label of chart element
+     * @private
      * @type Number
      */
     this.label = label;
+    
     /**
      * The y-value of chart element
+     * @private
      * @type Number
      */
     this.value = value;
+    
     /**
      * The x-pos of chart element
+     * @private
      * @type Number
      */
     this.x = x;
+    
     /**
      * The y-pos of chart element
+     * @private
      * @type Number
      */
     this.y = y;
+    
     /**
      * The width of chart element
+     * @private
      * @type Number
      */
     this.width = width;
+    
     /**
      * The height of chart element
+     * @private
      * @type Number
      */
     this.height= height; 
+    
     /**
      * The boolean signify when chart element is hovered
+     * @private
      * @type Boolean
      */
     this.isHover = false;
+    
     /**
      * The color when chart element is hovered
+     * @private
      * @type Color
      */
     this.highlightColor = "#8acc25";
+    
     /**
      * The normal color of chart element
+     * @private
      * @type Color
      */
     this.normalColor= "#cf2435";

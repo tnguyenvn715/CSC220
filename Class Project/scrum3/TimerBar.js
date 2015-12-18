@@ -1,6 +1,8 @@
+// <editor-fold desc="TimerBar">
+
 /**
  * @constructor
- * @augments TimerElement
+ * @extends TimerElement
  */
 function TimerBar(position, width, height, fillColor) {
     TimerElement.call(this, position, width, height, fillColor);
@@ -9,9 +11,8 @@ function TimerBar(position, width, height, fillColor) {
 TimerBar.prototype = new TimerElement();
 
 /**
- * Draws the bar for the timer
- * @param {Graphics} g
- * @returns {undefined}
+ * Draw the bar for the timer
+ * @param {Graphics} g The graphics context
  */
 TimerBar.prototype.draw = function(g) {
     TimerElement.prototype.draw.call(this, g);
@@ -27,3 +28,4 @@ TimerBar.prototype.draw = function(g) {
     g.closePath();
 }
 
+//</editor-fold>

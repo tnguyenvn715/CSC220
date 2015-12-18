@@ -2,7 +2,7 @@
 
 /**
  * Encapsulates features of a bar chart along with functions
- * @augments Chart
+ * @extends Chart
  * @constructor 
  */
 function BarChart(canvas) {
@@ -36,7 +36,7 @@ BarChart.prototype.updateChart = function(timerManager, point) {
     var yearSpan = timerManager.getNumYears();
     var xpos = timerManager.getSliderPosition().getX();
     var currentyear = timerManager.getLabel();
-    var width = this.calculateWidth(yearSpan);
+    var width = this.calculateElementWidth(yearSpan);
     this.addElement(point, xpos, width); 
 }
 //</editor-fold>
@@ -46,7 +46,7 @@ BarChart.prototype.updateChart = function(timerManager, point) {
 /**
  * Encapsulates features of a bar along with functions
  * @constructor
- * @augments ChartElement 
+ * @extends ChartElement
  */
 function BarElement(label, value, x, y, width, height){
     ChartElement.call(this,label, value, x, y, width, height );

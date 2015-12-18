@@ -1,7 +1,7 @@
 // <editor-fold desc="CustomGameLoop">
 /**
  * @constructor
- * @augments GameLoop
+ * @extends GameLoop
  */
 function CustomGameLoop() {
     
@@ -198,7 +198,7 @@ CustomGameLoop.prototype.clear = function(g, canvas) {
  */
 CustomGameLoop.prototype.update = function() {
     GameLoop.prototype.update.call(this);
-    if (this.timerManager.getLabel() >= 2014 && 
+    if (this.timerManager.getLabel() >= this.timerManager.getEndYear() && 
                         this.timerManager.isPlayed == true) {
         this.timerManager.isPlayed == false;
         
@@ -208,7 +208,7 @@ CustomGameLoop.prototype.update = function() {
         this.timerManager.updateTimer(); 
         var currentYear = this.timerManager.getLabel();
         var dataText = this.data.getLoadedString();
-        var currentData = new DataSet(this.dataType, dataText, 
+        var currentData = new DataSet("current_temp", dataText, 
                             this.timerManager.getStartYear());  
         var point = currentData.getDataPointFromYear(currentYear);
         this.chart.updateChart(this.timerManager, point);  

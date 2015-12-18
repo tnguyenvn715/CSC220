@@ -32,20 +32,20 @@ DataPoint.prototype.getLabel = function() {
 }
 
 /**
- * Return the data point's value
- * @returns {Number}
- */
-DataPoint.prototype.getValue = function() {
-    return this.value;
-}
-
-/**
  * Set the data point's label
  * @param {String} label
  * @returns {undefined}
  */
 DataPoint.prototype.setLabel = function(label) {
     this.label = label;
+}
+
+/**
+ * Return the data point's value
+ * @returns {Number}
+ */
+DataPoint.prototype.getValue = function() {
+    return this.value;
 }
 
 /**

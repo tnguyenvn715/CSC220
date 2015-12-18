@@ -1,95 +1,111 @@
+// <editor-fold desc="DataPoint">
 /**
- * Encapulates properties of series of data points
+ * Represent a set of data points
  * @constructor
- * @param {String} name
- * @param {String} textFile
- * @param {Number} year
- * @returns {DataSet}
  */
-function DataSet(name, textFile, year) {
+function DataSet(type, textFile, startYear) {
     /**
-     * 
+     * the type of data
+     * @private
+     * @type String
      */
-    this.name = name;
+    this.type = type;
     /**
-     * 
+     * the array of data points
+     * @private
+     * @type array
      */
     this.data = [];
-    /**
-     * 
-     */
     
+    /**
+     * the string format of data file
+     * @private
+     * @type String
+     */
     this.textFile = textFile;
-    this.year = year;
-    //console.log(year);
-    this.initializeData(this.year);
+    
+    /**
+     * the starting year
+     * @private
+     * @type Number
+     */
+    this.startYear = startYear;
+    
+    this.initializeData();
 }
 
 /**
- * 
- * @param {Number} startYear
- * @returns {undefined}
+ * Initialize the data set
+ * @param {Number} startYear The first year for the dataset
  */
-DataSet.prototype.initializeData = function(startYear) {
-    //console.log(startYear);
-    this.readFileToArray(this.textFile, startYear);
+DataSet.prototype.initializeData = function() {
+    this.readFileToArray();
 }
 
 /**
- * 
- * @param {String} file
- * @param {Number} type
- * @param {Number} startYear
- * @returns {undefined}
+ * Convert the file string into an array of dataPoints
+ * @param {Number} type The type of data 
+ * @param {String} file The string of data
+ * @param {Number} startYear The first year
  */
-DataSet.prototype.readFileToArray = function(file, startYear) {
-    // type = 0 : temperature anomaly to present
-    // type = 1 : future projection of temperature 
+DataSet.prototype.readFileToArray = function() {
+    // type = curTemp : temperature anomaly to present
+    // type = ice : future projection of temperature 
     // type = 2 : ice data to present
     // type = 3 : future projection of ice data
-    
-        var lines = [];
-        lines = file.split(/\r\n|\n/);
-        for(var i = 0; i < lines.length; i++){
-            if(i > 6 ) {
-                
-                var year = lines[i].split(",")[0]; //get year
-                if (parseInt(year) < parseInt(startYear)){
-                    continue;
-                }
-                var value = lines[i].split(",")[1]; // get value
-                this.addDataPoint(year, value);
-                
+    var numSkipLines = 0;
+    if (this.type == "curren_temp"){
+        numSkipLines = 6;
+    }
+    else if (this.type == "sea_ice")
+    {
+        numSkipLines = 3;
+        this.startYear = 1979;
+
+    }
+    var lines = [];
+    lines = this.textFile.split(/\r\n|\n/);
+    for(var i = 0; i < lines.length; i++){
+        if(i > numSkipLines ) {
+            var year = lines[i].split(",")[0]; //get year
+            if (parseInt(year) < parseInt(this.startYear)){
+                continue;
             }
+            var value = lines[i].split(",")[1]; // get value
+            this.addDataPoint(year, value);
+                
         }
-    
+    }
 }
 
-DataSet.prototype.getData = function() {
+/**
+ * Get the data array 
+ * @returns {Array}
+ */
+DataSet.prototype.getDataArray = function() {
     return this.data;
 }
 
 /**
- * 
- * @param {Number} year
+ * Retrieve the data point with year parameter
+ * @param {Number} year The requested year
  * @returns {DataPoint}
  */
 DataSet.prototype.getDataPointFromYear = function(year) {
     for (var i = 0; i < this.data.length; i++){
         if(this.data[i].getLabel() == year){
-            return this.data[i];
-            
+            return this.data[i];    
         }
     }
 
 }
 
 /**
- * 
- * @param {Number} year
+ * Retrieve the index of the data point with year parameter
+ * @param {Number} year The requested year
  * @returns {Number}
  */
-DataSet.prototype.getIndex = function(year) {
+DataSet.prototype.getIndexFromYear = function(year) {
     var data = this.getData();
     for (var i = 0; i < data.length; i++){
         if(parseInt(data[i].getLabel()) === parseInt(year)){
@@ -99,38 +115,36 @@ DataSet.prototype.getIndex = function(year) {
 }
 
 /**
- * 
+ * Set the data array to new array
  * @param {Array} data
- * @returns {undefined}
  */
 DataSet.prototype.setData = function(data) {
     this.data = data;
 }
 
 /**
- * 
+ * Get the type of the data set
  * @returns {String}
  */
-DataSet.prototype.getName = function() {
-    return this.name;
+DataSet.prototype.getType = function() {
+    return this.type;
 }
 
 /**
- * 
- * @param {String} name
- * @returns {undefined}
+ * Set the type of the data set
+ * @param {String} type The new type for the data set
  */
-DataSet.prototype.setName = function(name) {
-    this.name = name;
+DataSet.prototype.setType = function(type) {
+    this.type = type;
 }
 
 /**
- * 
- * @param {String} label
- * @param {Number} value
- * @returns {undefined}
+ * Add a data point to the set
+ * @param {String} label The label for data point
+ * @param {Number} value The value for data point
  */
 DataSet.prototype.addDataPoint = function(label, value) {
     this.data.push(new DataPoint(label, value));
 }
+// </editor-fold>
 
