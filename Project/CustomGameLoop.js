@@ -2,7 +2,6 @@
 /**
  * @constructor
  * @augments GameLoop
- * @returns {CustomGameLoop}
  */
 function CustomGameLoop() {
     
@@ -11,12 +10,11 @@ function CustomGameLoop() {
 CustomGameLoop.prototype = new GameLoop();
 
 /**
- * 
- * @param {Canvas} canvas
- * @param {TimerManager} timerManager
- * @returns {undefined}
+ * Initialize data and chart and pointer manager
+ * @param {Canvas} canvas - The area where graphics are drawn
+ * @param {String} type - The type of data to be displayed 
  */
-CustomGameLoop.prototype.initialize = function(canvas, timerManager) {
+CustomGameLoop.prototype.initialize = function(canvas) {
     GameLoop.prototype.initialize.call(this, canvas);  
     this.devicePixelRatio = window.devicePixelRatio;
     var _this = this;
@@ -24,28 +22,75 @@ CustomGameLoop.prototype.initialize = function(canvas, timerManager) {
                            function() {
                                _this.onWindowResize();
                             }, false);
-                            
-    this.inputManager = new InputManager(); 
-    this.timerManager = timerManager;
+
+    this.initializeChartTimer(1901);
     this.data = new Resource("temperature_fig-2.csv");
     this.data.beginLoad(this, this.onDataLoaded);  
     this.chart = new BarChart(this.canvas);  
+    this.pointerManager = new PointerManager(this.chart);
+    this.initializeUI();
+    
+}
+
+/**
+ * Set the timer elements for timerManager
+ * @param {Number} year - The starting year for the timer
+ */
+CustomGameLoop.prototype.initializeChartTimer = function(year) {
+    var timerBar = new TimerBar(new Point(70, 410), 850, 5, "white");
+    var timerSlider = new TimerSlider(new Point(70, 400), 10, 20, "#003366", year, 2014);
+    timerSlider.setInitialPosition(new Point(70, 400));
+    this.timerManager = new TimerManager(timerSlider, timerBar);
+}
+
+/**
+ * Reset the timerManager and clear chart elements on canvas
+ */
+CustomGameLoop.prototype.refresh = function(){
+    this.timerManager.resetTimer();
+    this.chart.clearElements();
+   
+}
+
+/**
+ * Set the start year for timerManager from UI input
+ */
+CustomGameLoop.prototype.initializeUI = function() {
+    var year = this.getParameterByName("inputYear");
+    if (year != "") {
+        this.timerManager.setStartYear(Number(year));
+        this.timerManager.resetTimer();      
+    }
+    document.getElementById("inputYear").value = this.timerManager.getStartYear();
+    this.chart.clearElements();
+}
+
+/**
+ * Retrieve value from input field
+ * @param {String} name - The name of the input field
+ * @returns {String} results - The value from the input field 
+ */
+CustomGameLoop.prototype.getParameterByName = function(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : 
+            decodeURIComponent(results[1].replace(/\+/g, " ")); 
+    
 }
 
 /**
  * 
  * @param {Resource} resource
- * @returns {undefined}
  */
 CustomGameLoop.prototype.onDataLoaded = function(resource) {
     var test = 1;
 }
 
 /**
- * 
- * @param {Number} width
- * @param {Number} height
- * @returns {undefined}
+ * Set the width and height for canvas space
+ * @param {Number} width Canvas' width in pixels
+ * @param {Number} height Canvas' height in pixels
  */
 CustomGameLoop.prototype.setCanvasSize = function(width, height) {
    this.canvas.width = width;
@@ -53,26 +98,23 @@ CustomGameLoop.prototype.setCanvasSize = function(width, height) {
 }
 
 /**
- * 
- * @param {Number} width
- * @returns {undefined}
+ * Set the width for canvas space
+ * @param {Number} width Canvas' width in pixels
  */
 CustomGameLoop.prototype.setWidth = function(width) {
     this.canvas.width = width;
 }
 
 /**
- * 
- * @param {Number} height
- * @returns {undefined}
+ * Set the height for canvas space
+ * @param {Number} height Canvas' height in pixels
  */
 CustomGameLoop.prototype.setHeight = function(height) {
     this.canvas.height = height;
 }
 
 /**
- * 
- * @returns {undefined}
+ * Resize to fill window based on device pixel ratio
  */
 CustomGameLoop.prototype.fillWindow = function() {
     this.setWidth(window.innerWidth * this.devicePixelRatio) ;
@@ -81,7 +123,6 @@ CustomGameLoop.prototype.fillWindow = function() {
 
 /**
  * 
- * @returns {undefined}
  */
 CustomGameLoop.prototype.onWindowResize = function() {
     this.fillWindow();
@@ -89,80 +130,63 @@ CustomGameLoop.prototype.onWindowResize = function() {
 
 /**
  * 
- * @param {Resource} resource
- * @returns {undefined}
- */
-CustomGameLoop.prototype.onDataLoaded = function(resource) {
-    var test = 1;
-}
-
-/**
- * 
  * @param {Number} id
  * @param {Point} position
- * @returns {undefined}
  */
 CustomGameLoop.prototype.onPointerEnter = function(id, position) {
-    this.inputManager.onPointerEnter(id, position);
+    this.pointerManager.onPointerEnter(id, position);
 }
 
 /**
  * 
  * @param {Number} id
  * @param {Point} position
- * @returns {undefined}
  */
 CustomGameLoop.prototype.onPointerMove = function(id, position) {
-    this.inputManager.onPointerMove(id, position);
+    this.pointerManager.onPointerMove(id, position);
 }
 
 /**
  * 
  * @param {type} id
  * @param {type} position
- * @returns {undefined}
  */
 CustomGameLoop.prototype.onPointerActivate = function(id, position) {
-    this.inputManager.onPointerActivate(id, position);
+    this.pointerManager.onPointerActivate(id, position);
 }
 /**
  * 
  * @param {type} id
  * @param {type} position
- * @returns {undefined}
  */
 CustomGameLoop.prototype.onPointerDeactivate = function(id, position) {
-    this.inputManager.onPointerDeactivate(id, position);
+    this.pointerManager.onPointerDeactivate(id, position);
 }
 
 /**
  * 
  * @param {Number} id
  * @param {Point} position
- * @returns {undefined}
  */
 
 CustomGameLoop.prototype.onPointerLeave = function(id, position) {
-    this.inputManager.onPointerLeave(id, position);
+    this.pointerManager.onPointerLeave(id, position);
 }
 
 /**
- * 
- * @param {Graphics} g
- * @returns {undefined}
+ * Draw the chart and timerManager elements in the frame
+ * @param {Graphics} g The graphics context
  */
 CustomGameLoop.prototype.draw = function(g) {
     GameLoop.prototype.draw.call(this, g);
-    
     this.chart.draw(this.g); 
     this.timerManager.draw(this.g); 
 }
 
 /**
- * 
- * @param {Graphics} g
- * @param {Canvas} canvas
- * @returns {undefined}
+ * Clear the graphics on canvas 
+ * @param {Graphics} g The graphics context
+ * @param {Canvas} canvas The area where graphics are drawn
  */
 CustomGameLoop.prototype.clear = function(g, canvas) {
     GameLoop.prototype.clear.call(this, g);
@@ -170,8 +194,7 @@ CustomGameLoop.prototype.clear = function(g, canvas) {
 }
 
 /**
- * 
- * @returns {undefined}
+ * Update the frame
  */
 CustomGameLoop.prototype.update = function() {
     GameLoop.prototype.update.call(this);
@@ -185,169 +208,11 @@ CustomGameLoop.prototype.update = function() {
         this.timerManager.updateTimer(); 
         var currentYear = this.timerManager.getLabel();
         var dataText = this.data.getLoadedString();
-        var currentData = new DataSet("CurTempData", dataText, 
+        var currentData = new DataSet(this.dataType, dataText, 
                             this.timerManager.getStartYear());  
         var point = currentData.getDataPointFromYear(currentYear);
         this.chart.updateChart(this.timerManager, point);  
     }
     
 }
-// </editor-fold>
-
-// <editor-fold desc="InputManager">
-/**
- * 
- * @returns {InputManager}
- */
-function InputManager() {
-    this.pointers = { };
-}
-
-/**
- * 
- * @param {Number} id
- * @param {Point} position
- * @returns {undefined}
- */
-InputManager.prototype.onPointerEnter = function(id, position) {
-    this.addPointer(id, position);
-}
-
-/**
- * 
- * @param {Number} id
- * @param {Point} position
- * @returns {undefined}
- */
-InputManager.prototype.onPointerMove = function(id, position) {
-    this.movePointer(id, position);
-}
-
-/**
- * 
- * @param {Number} id
- * @param {Point} position
- * @returns {undefined}
- */
-InputManager.prototype.onPointerActivate = function(id, position) {
-    this.pointers[id].activate();
-}
-
-/**
- * 
- * @param {Number} id
- * @param {Point} position
- * @returns {undefined}
- */
-InputManager.prototype.onPointerDeactivate = function(id, position) {
-    this.pointers[id].deactivate();
-}
-
-/**
- * 
- * @param {Number} id
- * @param {Point} position
- * @returns {undefined}
- */
-InputManager.prototype.onPointerLeave = function(id, position) {
-    this.removePointer(id, position);
-}
-
-/**
- * 
- * @param {Number} id
- * @returns {Boolean}
- */
-InputManager.prototype.hasPointer = function(id) {
-    return typeof this.pointers[id] != 'undefined';
-}
-
-/**
- * 
- * @param {Number} id
- * @param {Point} initialPosition
- * @returns {undefined}
- */
-InputManager.prototype.addPointer = function(id, initialPosition) {
-    this.pointers[id] = new Pointer(id, initialPosition);
-}
-
-/**
- * 
- * @param {Number} id
- * @param {Point} position
- * @returns {undefined}
- */
-InputManager.prototype.movePointer = function(id, position) {
-    this.pointers[id].move(position);
-}
-
-/**
- * 
- * @param {Number} id
- * @param {Point} position
- * @returns {undefined}
- */
-InputManager.prototype.removePointer = function(id, position) {
-    delete this.pointers[id];
-}
-
-// </editor-fold>
-
-// <editor-fold desc="Pointer">
-/**
- * 
- * @param {Number} id
- * @param {Point} initialPosition
- * @returns {Pointer}
- */
-function Pointer(id, initialPosition) {
-    this.id = id;
-    this.position = initialPosition.clone();
-    this.isActive = false;
-}
-
-/**
- * 
- * @param {Point} position
- * @returns {undefined}
- */
-Pointer.prototype.move = function(position) {
-    this.position.setX(position.getX());
-    this.position.setY(position.getY());
-}
-
-/**
- * 
- * @param {Point} position
- * @returns {Point}
- */
-Pointer.prototype.getPosition = function(position) {
-    return this.position.clone();
-}
-
-/**
- * 
- * @returns {Boolean}
- */
-Pointer.prototype.getIsActive = function() {
-    return this.isActive;
-}
-
-/**
- * 
- * @returns {undefined}
- */
-Pointer.prototype.activate = function() {
-    this.isActive = true;
-}
-
-/**
- * 
- * @returns {undefined}
- */
-Pointer.prototype.deactivate = function() {
-    this.isActive = false;
-}
-
 // </editor-fold>

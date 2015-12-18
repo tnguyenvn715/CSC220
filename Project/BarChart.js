@@ -1,22 +1,24 @@
+// <editor-fold desc="BarChart">
+
 /**
+ * Encapsulates features of a bar chart along with functions
  * @augments Chart
- * @constructor
- * @param {Canvas} canvas
- * @returns {BarChart}
+ * @constructor 
  */
 function BarChart(canvas) {
     Chart.call(this, canvas);   
 }
+
 BarChart.prototype = new Chart();
 
 /**
- * 
- * @param {Number} label
- * @param {Number} value
- * @param {Number} x
- * @param {Number} y
- * @param {Number} width
- * @param {Number} height
+ * Creating a new bar for chart
+ * @param {Number} label The x-label of the bar
+ * @param {Number} value The y-value of the bar
+ * @param {Number} x Bar's x-posiiton
+ * @param {Number} y Bar's y-position
+ * @param {Number} width Bar's width
+ * @param {Number} height Bar's height
  * @returns {BarElement}
  */
 BarChart.prototype.initializeChartElement = function(label, value, x, y, width, height){
@@ -25,10 +27,9 @@ BarChart.prototype.initializeChartElement = function(label, value, x, y, width, 
 }
 
 /**
- * 
+ * Adding new data point to the chart 
  * @param {TimerManager} timerManager
  * @param {DataPoint} point
- * @returns {undefined}
  */
 BarChart.prototype.updateChart = function(timerManager, point) {
     Chart.prototype.updateChart.call(this, timerManager, point);
@@ -38,16 +39,14 @@ BarChart.prototype.updateChart = function(timerManager, point) {
     var width = this.calculateWidth(yearSpan);
     this.addElement(point, xpos, width); 
 }
+//</editor-fold>
+
+// <editor-fold desc="BarElement">
 
 /**
+ * Encapsulates features of a bar along with functions
+ * @constructor
  * @augments ChartElement 
- * @param {Number} label
- * @param {Number} value
- * @param {Number} x
- * @param {Number} y
- * @param {Number} width
- * @param {Number} height
- * @returns {BarElement}
  */
 function BarElement(label, value, x, y, width, height){
     ChartElement.call(this,label, value, x, y, width, height );
@@ -56,9 +55,8 @@ function BarElement(label, value, x, y, width, height){
 BarElement.prototype = new ChartElement();
 
 /**
- * 
- * @param {Graphics} g
- * @returns {undefined}
+ * Draw the individual representation of data point for chart
+ * @param {Graphics} g The graphics context 
  */
 BarElement.prototype.drawElement = function(g) {
     // credit: Professor Block
@@ -72,3 +70,4 @@ BarElement.prototype.drawElement = function(g) {
     
 }
 
+//</editor-fold>

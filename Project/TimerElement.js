@@ -1,24 +1,30 @@
+// <editor-fold desc="TimerElement">
+
 /**
- * Represents and encapusulates features of a Timer element
+ * Represents a Timer element
  * @constructor
  */
 function TimerElement(position, width, height, fillColor) {
     /**
-     * @type Point
+     * The position of the element
+     * @type Point 
      */
     this.position = position;
     
     /**
+     * The width of the element
      * @type Number
      */
     this.width = width;
     
     /**
+     * The height of the element
      * @type Number
      */
     this.height = height;
     
     /**
+     * The color of the element
      * @type String
      */
     this.fillColor = fillColor;
@@ -122,7 +128,6 @@ TimerElement.prototype.hitTest = function(mousePos) {
     }
 }
 
-
 /**
  * Draw timer element
  * @param {Graphics} g
@@ -131,3 +136,4 @@ TimerElement.prototype.hitTest = function(mousePos) {
 TimerElement.prototype.draw = function(g) {
     //override
 }
+//</editor-fold>

@@ -1,57 +1,57 @@
+// <editor-fold desc="TimerSlider">
+
 /**
- * 
+ * Represent a Timer slider
  * @constructor
  * @augments TimerElement
- * @param {Point} position
- * @param {Number} width
- * @param {Number} height
- * @param {String} fillColor
- * @param {Point} initialPosition
- * @param {Number} startYear
- * @param {Number} endYear
- * @param {String} label
- * @returns {TimerSlider}
  */
 function TimerSlider(position, width, height, 
                         fillColor, startYear, endYear) {
     TimerElement.call(this, position, width, height, fillColor);
     /**
+     * The starting year of the timer
      * @type Number
      */
     this.startYear = startYear;
     
     /**
+     * The last year of the timer
      * @type Number
      */
     this.endYear = endYear;
     
     /**
+     * The label of the slider
      * @type Number
      */
     this.label = startYear;
     
     /**
+     * The signifier for when slider is clicked
      * @type Boolean
      */
     this.isClicked = false;
     
     /**
+     * The signifier for when slider is dragged
      * @type Boolean
      */
     this.isDragged = false;
     
 }
 
-
 TimerSlider.prototype = new TimerElement();
 
+/**
+ * Set the increment for the slider to move by
+ * @param {Number} increment The number of pixels 
+ */
 TimerSlider.prototype.setIncrement = function(increment) {
     this.increment = increment;
 }
 /**
  * Set the initial position of the slider
- * @param {Point} position
- * @returns {undefined}
+ * @param {Point} position The first position
  */
 TimerSlider.prototype.setInitialPosition = function(position) {
     this.initialPosition = position;
@@ -59,7 +59,7 @@ TimerSlider.prototype.setInitialPosition = function(position) {
 
 /**
  * Get the initial position of the slider
- * @returns {Point}
+ * @returns {Point} 
  */
 TimerSlider.prototype.getInitialPosition = function() {
     return this.initialPosition;
@@ -83,8 +83,7 @@ TimerSlider.prototype.getEndYear = function() {
 
 /**
  * Set the starting year of the slider
- * @param {Number} newStartYear
- * @returns {undefined}
+ * @param {Number} newStartYear The new starting year
  */
 TimerSlider.prototype.setStartYear = function(newStartYear)
 {
@@ -93,25 +92,23 @@ TimerSlider.prototype.setStartYear = function(newStartYear)
 
 /**
  * Set the ending year of the slider
- * @param {Number} newEndYear
- * @returns {undefined}
+ * @param {Number} newEndYear The new ending year
  */
 TimerSlider.prototype.setEndYear = function(newEndYear) {
     this.endYear = newEndYear;
 }
 
 /**
- * Get the label of the slider's year value
- * @returns {Number} label of the current year
+ * Get the slider's year label
+ * @returns {Number} label The slider's label
  */
 TimerSlider.prototype.getLabel = function() {
     return this.label;
 }
 
 /**
- * Set the label of the slider's year value
- * @param {Number} newLabel
- * @returns {undefined}
+ * Set the slider's year label
+ * @param {Number} newLabel The new label
  */
 TimerSlider.prototype.setLabel = function(newLabel) {
     this.label = newLabel;
@@ -119,8 +116,6 @@ TimerSlider.prototype.setLabel = function(newLabel) {
 
 /**
  * Move the slider by the increment
- * @param {Number} Pixel increment to move
- * @returns {undefined}
  */
 TimerSlider.prototype.moveSlider = function() {
     if (this.label < this.endYear) {
@@ -138,8 +133,7 @@ TimerSlider.prototype.moveSlider = function() {
 
 /**
  * Draw the label of the timer slider
- * @param {Graphics} g
- * @returns {undefined}
+ * @param {Graphics} g The graphics context
  */
 TimerSlider.prototype.drawLabel = function(g) {
     g.beginPath();
@@ -153,8 +147,7 @@ TimerSlider.prototype.drawLabel = function(g) {
 
 /**
  * Draw the slider
- * @param {Graphics} g
- * @returns {undefined}
+ * @param {Graphics} g The graphics context
  */
 TimerSlider.prototype.draw = function(g) {
     TimerElement.prototype.draw.call(this, g);
@@ -167,12 +160,11 @@ TimerSlider.prototype.draw = function(g) {
 
 /**
  * Set the timer slider back to inital position
- * @returns {undefined}
  */
 TimerSlider.prototype.resetSlider = function() {
     this.updatePosition(this.initialPosition);
     this.setLabel(this.startYear);
 }
-
+//</editor-fold>
 
 
