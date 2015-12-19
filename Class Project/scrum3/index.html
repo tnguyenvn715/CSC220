@@ -14,6 +14,8 @@ and open the template in the editor.
         <script src ="DataPoint.js"></script> 
         <script src ="DataSet.js"></script> 
         <script src="TimerElement.js"></script>
+        <script src="TimerButton.js"></script>
+
         <script src="TimerBar.js"></script>
         <script src="TimerSlider.js"></script>
         <script src="TimerManager.js"></script>        
@@ -54,12 +56,21 @@ and open the template in the editor.
         
     </head>
     <body>
-        <div><h1>World Temperature Anomaly (F)</h1></div>
+        <!-- THIS FEATURE DOES NOT WORK -->
+        <form action="index.html">
+        <select id ="changeType">
+            <option value ="sea_ice" >Sea Ice</option>
+            <option value = "current_temp" selected="selected">Temperature Anomaly</option>       
+        </select>
+        <input type="submit" value="Reload">
+        </form>      
+       <!---------------------------------->
+       <div> Ice data will be made available in the future. </div>
+        <div><h1 id = "topic" >World Temperature Anomaly (F)</h1></div>
         <h1 id = "year"></h1>
 
         <div>Instruction: Enter your year of birth to see the data over your life time. Can you find the top ten hottest years? </div>
-        <form name= "myForm" action="index.html"
-            onsubmit="return validateForm()">
+        <form name= "myForm" action="index.html" onsubmit="return validateForm()">
             Year of birth: <input type="text" name="inputYear" id="inputYear">
             <input type="submit" value="Reload">
         </form>

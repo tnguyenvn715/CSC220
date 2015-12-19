@@ -5,8 +5,8 @@
  * @extends Chart
  * @constructor 
  */
-function BarChart(canvas) {
-    Chart.call(this, canvas);   
+function BarChart(canvas, x, y , width, height, yPixelIncrement, yScaleIncremen) {
+    Chart.call(this, canvas, x, y , width, height, yPixelIncrement, yScaleIncremen);   
 }
 
 BarChart.prototype = new Chart();
@@ -26,19 +26,6 @@ BarChart.prototype.initializeChartElement = function(label, value, x, y, width, 
     return new BarElement(label, value, x, y, width, height);
 }
 
-/**
- * Adding new data point to the chart 
- * @param {TimerManager} timerManager
- * @param {DataPoint} point
- */
-BarChart.prototype.updateChart = function(timerManager, point) {
-    Chart.prototype.updateChart.call(this, timerManager, point);
-    var yearSpan = timerManager.getNumYears();
-    var xpos = timerManager.getSliderPosition().getX();
-    var currentyear = timerManager.getLabel();
-    var width = this.calculateElementWidth(yearSpan);
-    this.addElement(point, xpos, width); 
-}
 //</editor-fold>
 
 // <editor-fold desc="BarElement">
